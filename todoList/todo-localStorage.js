@@ -26,6 +26,7 @@ for (let i = 0; i < savedTodos.length; i++) {
   //remove a todo
   removeBtn.addEventListener("click", function () {
     removeBtn.parentElement.remove();
+    savedTodos.pop();
   });
 }
 
