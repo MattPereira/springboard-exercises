@@ -57,39 +57,46 @@ function createDivsForColors(colorArray) {
   }
 }
 
+// document.body.style.pointerEvents = "none";
+let cardPairs = [];
 // TODO: Implement this function!
 function handleCardClick(event) {
   // you can use event.target to see which element was clicked
-
-  //click card to change background color to class attribute
   const cardColor = event.target.getAttribute("class");
   event.target.style.backgroundColor = cardColor;
 
-  //prevente users from flipping over more than two cards at a time
-
-  const cards = document.querySelectorAll("div");
+  let cards = document.querySelectorAll("div");
   let tracker = [];
+  // for (card of cards) {
+  //   let bgColor = card.getAttribute("style");
+  //   if (bgColor) {
+  //     cardPairs.push(bgColor);
+  //   }
+  // }
 
-  for (let i = 0; i < cards.length; i++) {
-    let bgColor = cards[i].getAttribute("style");
-    if (bgColor) {
-      tracker.push(bgColor);
-      console.log(tracker);
-    }
-
-    for (let j = 0; j < tracker.length; j++) {
-      if (tracker.length > 1 && tracker[j] === tracker[j + 1]) {
-        console.log("That is a match!");
-      } else if (tracker[j] !== tracker[j + 1] && tracker.length > 1) {
-        document.body.style.pointerEvents = "none";
-        console.log("not a match!");
-        setTimeout(function () {
-          console.log("flip them back!");
-          event.target.style.backgroundColor = "";
-        }, 2000);
-      }
-    }
+  if (event.target) {
+    cardPairs.push(event.target.style.backgroundColor);
   }
+
+  if (cardPairs.length === 2 && cardPairs[0] === cardPairs[1]) {
+    tracker.push(cardPairs.splice(0, 2));
+  } else if (cardPairs.length === 2 && cardPairs[0] !== cardPairs[1]) {
+    cardPairs.splice(0, 2);
+    document.body.style.pointerEvents = "none";
+    setTimeout(function () {
+      for (card of cards) {
+        let bgColor = card.getAttribute("style");
+        if (bgColor) {
+          card.style.backgroundColor = "";
+          document.body.style.pointerEvents = "";
+        }
+      }
+    }, 2000);
+  }
+
+  console.log(cardPairs);
+
+  // document.body.style.pointerEvents = "none";
 }
 
 //how to flip back over cards that dont match?
