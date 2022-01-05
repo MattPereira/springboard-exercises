@@ -57,8 +57,10 @@ function createDivsForColors(colorArray) {
   }
 }
 
-// document.body.style.pointerEvents = "none";
+//initialize arrays outside of clicker function lol
 let cardPairs = [];
+let tracker = [];
+
 // TODO: Implement this function!
 function handleCardClick(event) {
   // you can use event.target to see which element was clicked
@@ -66,15 +68,9 @@ function handleCardClick(event) {
   event.target.style.backgroundColor = cardColor;
 
   let cards = document.querySelectorAll("div");
-  let tracker = [];
-  // for (card of cards) {
-  //   let bgColor = card.getAttribute("style");
-  //   if (bgColor) {
-  //     cardPairs.push(bgColor);
-  //   }
-  // }
 
   if (event.target) {
+    event.target.style.pointerEvents = "none";
     cardPairs.push(event.target.style.backgroundColor);
   }
 
@@ -85,21 +81,55 @@ function handleCardClick(event) {
     document.body.style.pointerEvents = "none";
     setTimeout(function () {
       for (card of cards) {
-        let bgColor = card.getAttribute("style");
-        if (bgColor) {
-          card.style.backgroundColor = "";
-          document.body.style.pointerEvents = "";
+        if (card.style.pointerEvents !== "none") {
+          let bgColor = card.getAttribute("style");
+          if (bgColor) {
+            card.style.backgroundColor = "";
+            card.style.pointerEvents = "";
+            document.body.style.pointerEvents = "";
+          }
         }
       }
     }, 2000);
   }
 
-  console.log(cardPairs);
+  //USE TRACKER TO KEEP MATCHES FLIPPED OVER
 
-  // document.body.style.pointerEvents = "none";
+  //NEW PLAN : DILUTE TRACKER ARRAY TO JUST MATCHED COLORS
+  // console.log(tracker);
+  // for (track of tracker) {
+  //   console.log(track[0]);
+  //   for (card of cards) {
+  //     if (card.classList[0] === track[0]) {
+  //       card.style.backgoundColor = "pink";
+  //     }
+  //   }
+  // }
+
+  // console.log(tracker);
+  // for (let i = 0; i < tracker.length; i++) {
+  //   for (let j = 0; j < cards.length; i++) {
+  //     if (tracker[i][0] === cards[j].classList[0]) {
+  //       cards[j].style.backgroundColor = tracker[i][0];
+  //     }
+  //   }
+  // }
+
+  //DOES NOT WORK
+  // function keepMatches() {
+  //   if (tracker.length) {
+  //     for (let i = 0; i < cards.length; i++) {
+  //       console.log(card.classList[0]);
+  //       if (cards[i].classList[0] === tracker[i][0]) {
+  //         card.style.backgroundColor = card.classList[0];
+  //       }
+  //     }
+  //   }
+  // }
+  // keepMatches();
 }
 
-//how to flip back over cards that dont match?
+//HOW TO KEEP MATCHES FLIPPED OVER?!?!?!
 
 // when the DOM loads
 createDivsForColors(shuffledColors);
