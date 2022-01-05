@@ -66,8 +66,11 @@ function handleCardClick(event) {
   // you can use event.target to see which element was clicked
   const cardColor = event.target.getAttribute("class");
   event.target.style.backgroundColor = cardColor;
+  event.target.classList.add("clicked");
 
   let cards = document.querySelectorAll("div");
+
+  let active = document.getElementsByClassName("clicked");
 
   if (event.target) {
     event.target.style.pointerEvents = "none";
@@ -76,57 +79,36 @@ function handleCardClick(event) {
 
   if (cardPairs.length === 2 && cardPairs[0] === cardPairs[1]) {
     tracker.push(cardPairs.splice(0, 2));
+    console.log(active);
+    active[0].classList.replace("clicked", "matched");
+    active[1].classList.replace("clicked", "matched");
+    console.log(tracker);
+
+    //THIS IS THE NEW NEW PLAN. USE MATCHED CLASS TO KEEP CARDS FROM BEING RESET!
+    event.target.classList.add("matched");
   } else if (cardPairs.length === 2 && cardPairs[0] !== cardPairs[1]) {
     cardPairs.splice(0, 2);
     document.body.style.pointerEvents = "none";
     setTimeout(function () {
       for (card of cards) {
-        if (card.style.pointerEvents !== "none") {
-          let bgColor = card.getAttribute("style");
-          if (bgColor) {
-            card.style.backgroundColor = "";
-            card.style.pointerEvents = "";
-            document.body.style.pointerEvents = "";
-          }
+        if (card.style.pointerEvents === "none") {
+          card.style.backgroundColor = "";
+          card.style.pointerEvents = "";
+          document.body.style.pointerEvents = "";
         }
+        // let bgColor = card.getAttribute("style");
+        // if (bgColor) {
+
+        // }
       }
     }, 2000);
   }
 
-  //USE TRACKER TO KEEP MATCHES FLIPPED OVER
-
-  //NEW PLAN : DILUTE TRACKER ARRAY TO JUST MATCHED COLORS
-  // console.log(tracker);
-  // for (track of tracker) {
-  //   console.log(track[0]);
-  //   for (card of cards) {
-  //     if (card.classList[0] === track[0]) {
-  //       card.style.backgoundColor = "pink";
-  //     }
-  //   }
-  // }
-
-  // console.log(tracker);
-  // for (let i = 0; i < tracker.length; i++) {
-  //   for (let j = 0; j < cards.length; i++) {
-  //     if (tracker[i][0] === cards[j].classList[0]) {
-  //       cards[j].style.backgroundColor = tracker[i][0];
-  //     }
-  //   }
-  // }
-
-  //DOES NOT WORK
-  // function keepMatches() {
-  //   if (tracker.length) {
-  //     for (let i = 0; i < cards.length; i++) {
-  //       console.log(card.classList[0]);
-  //       if (cards[i].classList[0] === tracker[i][0]) {
-  //         card.style.backgroundColor = card.classList[0];
-  //       }
-  //     }
-  //   }
-  // }
-  // keepMatches();
+  for (card of cards) {
+    if (card.classList.contains("matched")) {
+      card.style.backgroundColor = card.classList[0];
+    }
+  }
 }
 
 //HOW TO KEEP MATCHES FLIPPED OVER?!?!?!
