@@ -57,31 +57,32 @@ function createDivsForColors(colorArray) {
   }
 }
 
-//initialize arrays outside of clicker function lol
+//initialize cardPair array outside of clicker function lol
 let cardPairs = [];
-let tracker = [];
 
 // TODO: Implement this function!
 function handleCardClick(event) {
-  // you can use event.target to see which element was clicked
+  // FLIP THE CARD
   const cardColor = event.target.getAttribute("class");
   event.target.style.backgroundColor = cardColor;
   event.target.classList.add("clicked");
-  let cards = document.querySelectorAll("div");
 
+  //KEEP MATCHES FLIPPED
+  let cards = document.querySelectorAll("div");
   for (card of cards) {
     if (card.classList.contains("matched")) {
       card.style.backgroundColor = card.classList[0];
     }
   }
 
-  if (event.target) {
-    event.target.style.pointerEvents = "none";
-    cardPairs.push(event.target.style.backgroundColor);
-  }
+  //PREVENT DOUBLE CLICKS
+  event.target.style.pointerEvents = "none";
+
+  //DETERMINE IF CARD PAIRS MATCH
+  cardPairs.push(event.target.style.backgroundColor);
 
   if (cardPairs.length === 2 && cardPairs[0] === cardPairs[1]) {
-    tracker.push(cardPairs.splice(0, 2));
+    cardPairs.splice(0, 2);
     for (card of cards) {
       if (card.classList.contains("clicked")) {
         card.classList.replace("clicked", "matched");
@@ -90,7 +91,6 @@ function handleCardClick(event) {
   } else if (cardPairs.length === 2 && cardPairs[0] !== cardPairs[1]) {
     cardPairs.splice(0, 2);
     document.body.style.pointerEvents = "none";
-
     setTimeout(function () {
       for (card of cards) {
         if (card.classList.contains("clicked")) {
@@ -103,8 +103,6 @@ function handleCardClick(event) {
     }, 2000);
   }
 }
-
-//HOW TO KEEP MATCHES FLIPPED OVER?!?!?!
 
 // when the DOM loads
 createDivsForColors(shuffledColors);
