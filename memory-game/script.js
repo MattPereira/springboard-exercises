@@ -106,3 +106,17 @@ function handleCardClick(event) {
 
 // when the DOM loads
 createDivsForColors(shuffledColors);
+
+//EXTRA CREDIT
+
+//Add a button to start game
+
+//Add a button to restart game
+
+//For every guess made, increment a score variable and display the score while the game is played
+
+//Store the lowest-scoring game in local storage, so that players can see a record of the best game played.
+
+// Allow for any number of cards to appear
+
+//Instead of hard-coding colors, try something different like random colors or even images!
