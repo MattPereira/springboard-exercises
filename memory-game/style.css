@@ -6,6 +6,6 @@
   display: inline-block;
 }
 
-/* body {
+.matched {
   pointer-events: none;
-} */
+}

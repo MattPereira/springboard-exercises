@@ -67,10 +67,13 @@ function handleCardClick(event) {
   const cardColor = event.target.getAttribute("class");
   event.target.style.backgroundColor = cardColor;
   event.target.classList.add("clicked");
-
   let cards = document.querySelectorAll("div");
 
-  let active = document.getElementsByClassName("clicked");
+  for (card of cards) {
+    if (card.classList.contains("matched")) {
+      card.style.backgroundColor = card.classList[0];
+    }
+  }
 
   if (event.target) {
     event.target.style.pointerEvents = "none";
@@ -79,35 +82,25 @@ function handleCardClick(event) {
 
   if (cardPairs.length === 2 && cardPairs[0] === cardPairs[1]) {
     tracker.push(cardPairs.splice(0, 2));
-    console.log(active);
-    active[0].classList.replace("clicked", "matched");
-    active[1].classList.replace("clicked", "matched");
-    console.log(tracker);
-
-    //THIS IS THE NEW NEW PLAN. USE MATCHED CLASS TO KEEP CARDS FROM BEING RESET!
-    event.target.classList.add("matched");
+    for (card of cards) {
+      if (card.classList.contains("clicked")) {
+        card.classList.replace("clicked", "matched");
+      }
+    }
   } else if (cardPairs.length === 2 && cardPairs[0] !== cardPairs[1]) {
     cardPairs.splice(0, 2);
     document.body.style.pointerEvents = "none";
+
     setTimeout(function () {
       for (card of cards) {
-        if (card.style.pointerEvents === "none") {
+        if (card.classList.contains("clicked")) {
           card.style.backgroundColor = "";
           card.style.pointerEvents = "";
-          document.body.style.pointerEvents = "";
+          card.classList.remove("clicked");
         }
-        // let bgColor = card.getAttribute("style");
-        // if (bgColor) {
-
-        // }
       }
+      document.body.style.pointerEvents = "";
     }, 2000);
-  }
-
-  for (card of cards) {
-    if (card.classList.contains("matched")) {
-      card.style.backgroundColor = card.classList[0];
-    }
   }
 }
 
