@@ -6,11 +6,13 @@ const COLORS = [
   "green",
   "orange",
   "purple",
+  "pink",
   "red",
   "blue",
   "green",
   "orange",
   "purple",
+  "pink",
 ];
 
 // here is a helper function to shuffle an array
@@ -57,15 +59,49 @@ function createDivsForColors(colorArray) {
   }
 }
 
-//initialize cardPair array outside of clicker function lol
 let cardPairs = [];
+let guessCount = [];
+let matchCount = [];
+let lowScore;
+
+document.addEventListener("click", function () {
+  // WINNER DISPLAY
+  if (matchCount.length === 6) {
+    const winner = document.createElement("h2");
+    winner.innerText = "WINNER WINNER CHICKEN DINNER";
+
+    const scoreBoard = document.getElementById("score-board");
+    scoreBoard.append(winner);
+  }
+  //Store the lowest-scoring game in local storage, so that players can see a record of the best game played.
+
+  //STILL NEEDS MORE WORK
+  //WHEN THE PAGE REFRESHES THE localStorage.lowScore gets set to empty string. why?
+
+  if (localStorage.lowScore === undefined && matchCount.length === 6) {
+    localStorage.setItem("lowScore", guessCount.length);
+  }
+
+  let currentGameScore = document.getElementById("guess").innerText;
+
+  if (Number(localStorage.lowScore) > currentGameScore) {
+    localStorage.setItem("lowScore", currentGameScore);
+  }
+
+  let lowestGameScore = document.getElementById("lowest");
+  lowestGameScore.innerText = "hello";
+});
 
 // TODO: Implement this function!
 function handleCardClick(event) {
   // FLIP THE CARD
+
   const cardColor = event.target.getAttribute("class");
   event.target.style.backgroundColor = cardColor;
   event.target.classList.add("clicked");
+
+  //PREVENT DOUBLE CLICKS
+  event.target.style.pointerEvents = "none";
 
   //KEEP MATCHES FLIPPED
   let cards = document.querySelectorAll("div");
@@ -75,21 +111,18 @@ function handleCardClick(event) {
     }
   }
 
-  //PREVENT DOUBLE CLICKS
-  event.target.style.pointerEvents = "none";
-
   //DETERMINE IF CARD PAIRS MATCH
   cardPairs.push(event.target.style.backgroundColor);
 
   if (cardPairs.length === 2 && cardPairs[0] === cardPairs[1]) {
-    cardPairs.splice(0, 2);
+    matchCount.push(cardPairs.splice(0, 2));
     for (card of cards) {
       if (card.classList.contains("clicked")) {
         card.classList.replace("clicked", "matched");
       }
     }
   } else if (cardPairs.length === 2 && cardPairs[0] !== cardPairs[1]) {
-    cardPairs.splice(0, 2);
+    guessCount.push(cardPairs.splice(0, 2));
     document.body.style.pointerEvents = "none";
     setTimeout(function () {
       for (card of cards) {
@@ -100,22 +133,38 @@ function handleCardClick(event) {
         }
       }
       document.body.style.pointerEvents = "";
-    }, 2000);
+    }, 1000);
   }
+
+  //For every guess made, increment a score variable and display the score while the game is played
+  let currentGameScore = guessCount.length;
+
+  const score = document.querySelector("#guess");
+  score.innerText = currentGameScore;
 }
+
+//IF YOU WIN!
 
 // when the DOM loads
 createDivsForColors(shuffledColors);
 
-//EXTRA CREDIT
-
+//FURTHER STUDY
 //Add a button to start game
 
-//Add a button to restart game
+const startBtn = document.getElementById("start-button");
+const restartBtn = document.getElementById("restart-button");
 
-//For every guess made, increment a score variable and display the score while the game is played
+startBtn.addEventListener("click", function (evt) {
+  const game = document.getElementById("game-board");
 
-//Store the lowest-scoring game in local storage, so that players can see a record of the best game played.
+  game.classList.remove("d-none");
+  startBtn.classList.add("d-none");
+  restartBtn.classList.remove("d-none");
+});
+
+restartBtn.addEventListener("click", function () {
+  window.location.reload();
+});
 
 // Allow for any number of cards to appear
 
