@@ -27,6 +27,12 @@ for (let i = 0; i < savedTodos.length; i++) {
   removeBtn.addEventListener("click", function () {
     removeBtn.parentElement.remove();
     savedTodos.pop();
+
+    //extract local storage
+
+    //splice
+
+    //save back to local storage
   });
 }
 
