@@ -58,7 +58,16 @@ function makeHtmlBoard() {
 
 function findSpotForCol(x) {
   // TODO: write the real version of this, rather than always returning 0
-  return 0;
+
+  //how do i select a column from the game board?
+
+  for (let i = HEIGHT - 1; i >= 0; i--) {
+    let column = document.getElementById(`${i}-${x}`);
+    if (column.children.length === 0) {
+      return i;
+    }
+  }
+  return null;
 }
 
 /** placeInTable: update DOM to place piece into HTML table of board */
@@ -76,6 +85,7 @@ function placeInTable(y, x) {
 
 function endGame(msg) {
   // TODO: pop up alert message
+  alert(msg);
 }
 
 /** handleClick: handle click of column top to play piece */
@@ -102,9 +112,11 @@ function handleClick(evt) {
 
   // check for tie
   // TODO: check if all cells in board are filled; if so call, call endGame
+
   for (let i = 0; i < HEIGHT; i++) {
+    console.log(board[i]);
     if (board[i].every((square) => square !== null)) {
-      console.log("full game");
+      console.log("full row");
     }
   }
 
