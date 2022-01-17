@@ -42,7 +42,7 @@ function makeHtmlBoard() {
   }
   htmlBoard.append(top);
 
-  // Create and append trs for htmlBoard with dynamic id attributes based upon height and width
+  // Create and append trs for htmlBoard with dynamic id attributes based upon board height and width
   for (let y = 0; y < HEIGHT; y++) {
     const row = document.createElement("tr");
     for (let x = 0; x < WIDTH; x++) {
@@ -58,9 +58,9 @@ function makeHtmlBoard() {
 
 function findSpotForCol(x) {
   // TODO: write the real version of this, rather than always returning 0
-
   //how do i select a column from the game board?
 
+  //loop through each column using template literal and check if the td has children
   for (let i = HEIGHT - 1; i >= 0; i--) {
     let column = document.getElementById(`${i}-${x}`);
     if (column.children.length === 0) {
