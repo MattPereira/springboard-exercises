@@ -144,33 +144,42 @@ function checkForWin() {
 
   // TODO: read and understand this code. Add comments to help you.
 
-  for (var y = 0; y < HEIGHT; y++) {
-    for (var x = 0; x < WIDTH; x++) {
-      var horiz = [
+  //loops through every cell on board to check for a win condition of four in a row horizontally, vertically, or diagonally
+  for (let y = 0; y < HEIGHT; y++) {
+    for (let x = 0; x < WIDTH; x++) {
+      //check for if four in a row same color horizontally
+      const horiz = [
         [y, x],
         [y, x + 1],
         [y, x + 2],
         [y, x + 3],
       ];
-      var vert = [
+
+      //check for if four in a row same color vertically
+      const vert = [
         [y, x],
         [y + 1, x],
         [y + 2, x],
         [y + 3, x],
       ];
-      var diagDR = [
+
+      //check for if four in a row same color diagonal to the right
+      const diagDR = [
         [y, x],
         [y + 1, x + 1],
         [y + 2, x + 2],
         [y + 3, x + 3],
       ];
-      var diagDL = [
+      //check for if four in a row same color diagonal to the left
+
+      const diagDL = [
         [y, x],
         [y + 1, x - 1],
         [y + 2, x - 2],
         [y + 3, x - 3],
       ];
 
+      //check if any win conditions are true
       if (_win(horiz) || _win(vert) || _win(diagDR) || _win(diagDL)) {
         return true;
       }
