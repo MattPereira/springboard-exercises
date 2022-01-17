@@ -1,0 +1,20 @@
+what HTML would be useful for the game board itself?
+>>> divs or table
+
+how could you represent a played-piece in the HTML board?
+>>> add css to an empty td that has only a border
+
+in the JavaScript, what would be a good structure for the in-memory game board?
+>>> array so that you can keep track of order
+
+what might the flow of the game be?
+>>> player one chooses row to drop token, then player 2 and loop that until 4 in a row, or until board fills which would be a tie.
+
+
+Then, write down some functions names/descriptions that would be useful for this game.
+
+function createGameBoard()
+
+function dropCircle()
+
+function checkForWin()
