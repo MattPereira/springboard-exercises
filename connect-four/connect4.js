@@ -113,11 +113,8 @@ function handleClick(evt) {
   // check for tie
   // TODO: check if all cells in board are filled; if so call, call endGame
 
-  for (let i = 0; i < HEIGHT; i++) {
-    console.log(board[i]);
-    if (board[i].every((square) => square !== null)) {
-      console.log("full row");
-    }
+  if (board.every((array) => array.every((td) => td !== null))) {
+    endGame("board is full! tie game!");
   }
 
   // switch players
