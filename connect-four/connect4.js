@@ -67,6 +67,8 @@ function findSpotForCol(x) {
       return i;
     }
   }
+
+  //Try to do with new map
   return null;
 }
 
