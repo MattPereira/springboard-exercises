@@ -57,9 +57,6 @@ function makeHtmlBoard() {
 /** findSpotForCol: given column x, return top empty y (null if filled) */
 
 function findSpotForCol(x) {
-  // TODO: write the real version of this, rather than always returning 0
-  //how do i select a column from the game board?
-
   //loop through each column using template literal and check if the td has children
   for (let i = HEIGHT - 1; i >= 0; i--) {
     let column = document.getElementById(`${i}-${x}`);
@@ -68,17 +65,17 @@ function findSpotForCol(x) {
     }
   }
 
-  //Try to do with new map
   return null;
 }
 
 /** placeInTable: update DOM to place piece into HTML table of board */
 
 function placeInTable(y, x) {
-  // TODO: make a div and insert into correct table cell
+  //creates a div, adds class of 'piece' and 'pCurrPlayer'
   const piece = document.createElement("div");
   piece.classList.add("piece", `p${currPlayer}`);
 
+  //selects the td to append the newly created 'piece' onto
   const td = document.getElementById(`${y}-${x}`);
   td.append(piece);
 }
@@ -102,8 +99,7 @@ function handleClick(evt) {
     return;
   }
 
-  // place piece in board and add to HTML table
-  // TODO: add line to update in-memory board
+  // place piece in the board array and add to HTML table
   placeInTable(y, x);
   board[y][x] = currPlayer;
 
@@ -112,15 +108,13 @@ function handleClick(evt) {
     return endGame(`Player ${currPlayer} won!`);
   }
 
-  // check for tie
-  // TODO: check if all cells in board are filled; if so call, call endGame
+  //checks if all cells in board are filled and if so calls endGame
 
   if (board.every((array) => array.every((td) => td !== null))) {
     endGame("board is full! tie game!");
   }
 
-  // switch players
-  // TODO: switch currPlayer 1 <-> 2
+  // switches players on each click
   const switchPlayer = () =>
     currPlayer === 1 ? (currPlayer = 2) : (currPlayer = 1);
   switchPlayer();
@@ -144,12 +138,10 @@ function checkForWin() {
     );
   }
 
-  // TODO: read and understand this code. Add comments to help you.
-
   //loops through every cell on board to check for a win condition of four in a row horizontally, vertically, or diagonally
   for (let y = 0; y < HEIGHT; y++) {
     for (let x = 0; x < WIDTH; x++) {
-      //check for if four in a row same color horizontally
+      //checks for if four in a row same color horizontally
       const horiz = [
         [y, x],
         [y, x + 1],
@@ -157,7 +149,7 @@ function checkForWin() {
         [y, x + 3],
       ];
 
-      //check for if four in a row same color vertically
+      //checks for if four in a row same color vertically
       const vert = [
         [y, x],
         [y + 1, x],
@@ -165,14 +157,14 @@ function checkForWin() {
         [y + 3, x],
       ];
 
-      //check for if four in a row same color diagonal to the right
+      //checks for if four in a row same color diagonal to the right
       const diagDR = [
         [y, x],
         [y + 1, x + 1],
         [y + 2, x + 2],
         [y + 3, x + 3],
       ];
-      //check for if four in a row same color diagonal to the left
+      //checks for if four in a row same color diagonal to the left
 
       const diagDL = [
         [y, x],
@@ -181,7 +173,7 @@ function checkForWin() {
         [y + 3, x - 3],
       ];
 
-      //check if any win conditions are true
+      //checks if any win conditions are true
       if (_win(horiz) || _win(vert) || _win(diagDR) || _win(diagDL)) {
         return true;
       }
