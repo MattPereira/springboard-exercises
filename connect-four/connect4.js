@@ -11,12 +11,8 @@ const HEIGHT = 6;
 let currPlayer = 1; // active player: 1 or 2
 const board = []; // array of rows, each row is array of cells  (board[y][x])
 
-/** makeBoard: create in-JS board structure:
- *    board = array of rows, each row is array of cells  (board[y][x])
- */
-
 function makeBoard() {
-  // TODO: set "board" to empty HEIGHT x WIDTH matrix array
+  //sets the board const to an array of rows and each row is an array of cells
   for (let i = 0; i < HEIGHT; i++) {
     board.push([]);
     for (let j = 0; j < WIDTH; j++) {
@@ -30,7 +26,7 @@ function makeBoard() {
 function makeHtmlBoard() {
   // get "htmlBoard" variable from the item in HTML w/ID of "board"
   const htmlBoard = document.getElementById("board");
-  // Create and prepend tr with #column-top and click event listener to use for dropping pieces
+  // Create and append tr with #column-top and click event listener to use for dropping pieces
   const top = document.createElement("tr");
   top.setAttribute("id", "column-top");
   top.addEventListener("click", handleClick);
@@ -138,10 +134,10 @@ function checkForWin() {
     );
   }
 
-  //loops through every cell on board to check for a win condition of four in a row horizontally, vertically, or diagonally
+  //creates what win condition arrays look like
   for (let y = 0; y < HEIGHT; y++) {
     for (let x = 0; x < WIDTH; x++) {
-      //checks for if four in a row same color horizontally
+      //four in a row horizontally array
       const horiz = [
         [y, x],
         [y, x + 1],
@@ -149,7 +145,7 @@ function checkForWin() {
         [y, x + 3],
       ];
 
-      //checks for if four in a row same color vertically
+      //four in a row vertically array
       const vert = [
         [y, x],
         [y + 1, x],
@@ -157,14 +153,14 @@ function checkForWin() {
         [y + 3, x],
       ];
 
-      //checks for if four in a row same color diagonal to the right
+      //four in a row diagonal to the right
       const diagDR = [
         [y, x],
         [y + 1, x + 1],
         [y + 2, x + 2],
         [y + 3, x + 3],
       ];
-      //checks for if four in a row same color diagonal to the left
+      //four in a row diagonal to the left
 
       const diagDL = [
         [y, x],
