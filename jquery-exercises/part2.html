@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movies App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+    <h1 class="text-center">Movies App!</h1>
+
+    <div class="container">
+        <div class="row mb-3">
+            <form action="">
+                <label for="title">Title[2+]:</label>
+                <input type="text" id="title">
+        
+                <label for="rating">Rating[0-10]:</label>
+                <input type="number" id="rating">
+                <button type="submit" class="btn btn-success">SUBMIT</button>
+            </form>
+        </div>
+        <div class="row mb-3">
+
+        <button class="btn btn-warning mb-3">SORT TITLES ALPHABETICALLY</button>
+        <button class="btn btn-secondary">SORT BY RATING</button>
+
+
+        </div>
+        <ul id="movie-list"></ul>
+    </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <script>
+        $("form button").on("click", function (event) {
+        event.preventDefault();
+
+        const title = $("form input").eq(0).val();
+        const rating = $("form input").eq(1).val();
+
+        if(title.length < 2) {
+            return alert('title must be at least 2 characters long!')
+        }
+
+        if(rating < 0 || rating > 10) {
+            return alert('rating must be between 0 and 10!')
+        } 
+
+        const li = $(`<li><em>${title}</em> : <b>${rating}</b> </li>`);
+
+        $("ul").append(li);
+
+        const deleteBtn = $("<button class='btn btn-danger'>X</button>").on(
+            "click",
+            function () {
+            this.parentElement.remove();
+            }
+        );
+
+        li.append(deleteBtn);
+        $("form input").eq(0).val("");
+        $("form input").eq(1).val("");
+        });
+
+        //FURTHER STUDY
+        $('form input').eq(1).attr('min', '0')
+        $('form input').eq(1).attr('max', '10')
+
+        //COME BACK TO SORTING BY TITLE OR RATING
+    </script>
+</body>
+</html>
