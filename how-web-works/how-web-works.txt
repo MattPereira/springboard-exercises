@@ -1,0 +1,36 @@
+/////////PART ONE : SOLIDIFY TERMINOLOGY
+
+HTTP : Hypertext Transfer Protocol is a protocol where clients request data from, or send data to a server.
+
+URL : a Uniform Resource Locator is the address of a unique resource on the Web.
+
+DNS : a Domain Name System translates human-friendly domain names to a numeric IP address.
+
+Query String : the part of a URL that assigns values to keys. 
+Query String Example: "?title=Amadeus&rating=10"
+
+HTTP Verbs
+GET: gets some data from a server. Requests without side effects, for example entering a URL in a browser or searching something on google.
+POST: send some data to a server. Requests with side effects: for example submitting a form that sends an email or charges a credit card.
+
+HTTP request : when a client makes a request to a server that follows the HTTP protocol
+
+HTTP response : when a server responds to a client using HTTP protocol by providing the client with the requested resource.
+
+HTTP Header: allows the client and server to share additional information with each HTTP request or response
+
+Request Headers: Host, User-Agent, Accept, Referer
+Response Headers: Date, Content-Type, Last-Modified, Server, Set-Cookie
+
+What are the processes that happen when you type “http://somesite.com/some/page.html” into a browser?
+
+1.The browser uses DNS to translate the URL into an IP address
+2. The browser sends request to IP address with headers that include additional information about the browser, previously existing cookies, and other stuff
+3. Server sends a response usualy consisting of HTML along with a status code response. (200: 'successful', 404: 'not found')
+4. The browser creates DOM from the HTML, and locates all other required resources for the page to load properly like images, css, and javascript.
+5. The browser makes individual HTTP requests for those resources and the server responds with each resource. 
+
+/////////////PART TWO : PRACTICE TOOLS
+1. curl https://icanhazdadjoke.com/search?term=pirate
+2. dig icanhazdadjoke.com
+3. python3 -m http.server then got to web browser and enter "localhost:8000" as the url
