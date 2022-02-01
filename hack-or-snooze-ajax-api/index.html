@@ -39,12 +39,17 @@
   <div class="navbar-brand">
     <a class="border border-white p-1 border-3 rounded text-white" href="#" id="nav-all">Hack or Snooze</a>
   </div>
-  <a class="btn btn-primary btn-sm" href="#" id="nav-add-story">New Story</a>
-  <a class="btn btn-primary btn-sm ms-3" href="#" id="nav-favorite-stories">Favorites</a>
-  <div class="nav-right">
-    <a class="nav-link" href="#" id="nav-login">login/signup</a>
-    <a class="nav-link" href="#" id="nav-user-profile"></a>
-    <a class="hidden" id="nav-logout" href="#"><small>(logout)</small></a>
+  <a class="btn btn-outline-primary btn-sm" href="#" id="nav-add-story">New Story</a>
+  <a class="btn btn-outline-primary btn-sm ms-3" href="#" id="nav-favorite-stories">Favorites</a>
+  <a class="btn btn-outline-primary btn-sm ms-3" href="#" id="nav-own-stories">Own Stories</a>
+  <div class="row justify-content-end nav-right">
+    <div class="col-8">
+      <a class="nav-link" href="#" id="nav-login">login/signup</a>
+      <a class="nav-link" href="#" id="nav-user-profile"></a>
+    </div>
+    <div class="col-4 d-flex justify-content-end align-items-center">
+      <a class="hidden" id="nav-logout" href="#"><small>(logout)</small></a>
+    </div>
   </div>
 </nav>
 
@@ -93,12 +98,6 @@
 
   <!-- List of all stories -->
   <ol id="all-stories-list" class="stories-list"></ol>
-
-  <!-- List of all stories favorited by the user -->
-  <ol id="favorite-stories" class="hidden stories-list"></ol>
-
-  <!--List of stories created by the user-->
-  <ol id="own-stories" class="hidden stories-list"></ol>
 
 
 </section>

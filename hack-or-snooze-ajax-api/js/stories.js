@@ -19,7 +19,7 @@ async function getAndShowStoriesOnStart() {
  * Returns the markup for the story.
  */
 
-function generateStoryMarkup(story) {
+function generateStoryMarkup(story, showDeleteBtn = false) {
   // console.debug("generateStoryMarkup", story);
 
   const hostName = story.getHostName();
@@ -29,6 +29,7 @@ function generateStoryMarkup(story) {
 
   return $(`
       <li id="${story.storyId}">
+      ${showDeleteBtn ? getDeleteBtnHTML() : ""}
       ${showFilled ? getHeartHTML(story, currentUser) : ""}
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
@@ -50,6 +51,14 @@ function getHeartHTML(story, user) {
 }
 
 ///// MAKE DELETE BUTTON HERE
+
+function getDeleteBtnHTML(story, user) {
+  return `
+    <span class="deleteBtn">
+      <i class="fas fa-trash-alt"></i>
+    </span>
+    `;
+}
 
 /** Gets list of stories from server, generates their HTML, and puts on page. */
 
@@ -82,7 +91,7 @@ async function submitNewStory(evt) {
 
   const story = await storyList.addStory(currentUser, storyData);
 
-  const $story = generateStoryMarkup(story);
+  const $story = generateStoryMarkup(story, true);
   $allStoriesList.prepend($story);
 
   $submitForm.hide();
@@ -107,7 +116,7 @@ async function addFavoriteStory(evt) {
   await currentUser.addFavorite(story);
 }
 
-$allStoriesList.on("click", ".far", addFavoriteStory);
+$allStoriesList.on("click", ".heart .far", addFavoriteStory);
 
 //removes heart filling and removes clicked story from currentUser favorites array
 async function removeFavoriteStory(evt) {
@@ -125,7 +134,22 @@ async function removeFavoriteStory(evt) {
   await currentUser.removeFavorite(story);
 }
 
-$allStoriesList.on("click", ".fas", removeFavoriteStory);
+$allStoriesList.on("click", ".heart .fas", removeFavoriteStory);
+
+//removes a story
+async function removeOwnStory(evt) {
+  console.debug("removeOwnStory");
+
+  const storyId = evt.target.parentElement.parentElement.id;
+
+  const story = await storyList.getStoryById(storyId);
+
+  await storyList.removeStory(currentUser, storyId);
+
+  putOwnStoriesOnPage();
+}
+
+$allStoriesList.on("click", ".deleteBtn .fas", removeOwnStory);
 
 // Removes $allStoriesList and replaces with
 function putFavoritesOnPage() {
@@ -135,6 +159,19 @@ function putFavoritesOnPage() {
 
   for (let story of currentUser.favorites) {
     const $story = generateStoryMarkup(story);
+    $allStoriesList.append($story);
+  }
+
+  $allStoriesList.show();
+}
+
+function putOwnStoriesOnPage() {
+  console.debug("putOwnStoriesOnPage");
+
+  $allStoriesList.empty();
+
+  for (let story of currentUser.ownStories) {
+    const $story = generateStoryMarkup(story, true);
     $allStoriesList.append($story);
   }
 

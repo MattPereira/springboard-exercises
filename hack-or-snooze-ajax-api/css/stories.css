@@ -40,3 +40,7 @@
 .heart {
   cursor: pointer;
 }
+
+.deleteBtn {
+  cursor: pointer;
+}

@@ -99,6 +99,28 @@ class StoryList {
     user.ownStories.unshift(story);
     return story;
   }
+
+  // deletes a story from API and removes from teh story lists
+  //user: current User instance
+  //storyId: the ID of the story you want to remove
+
+  async removeStory(user, storyId) {
+    const token = user.loginToken;
+    console.log(token);
+
+    await axios({
+      url: `${BASE_URL}/stories/${storyId}`,
+      method: "DELETE",
+      params: { token },
+    });
+
+    //filters the stories array to remove storyID we are removing
+    this.stories = this.stories.filter((story) => story.storyId !== storyId);
+
+    //do the same thing for users list of stories and their favorite stories
+    user.ownStories = user.ownStories.filter((s) => s.storyId !== storyId);
+    user.favorites = user.favorites.filter((s) => s.storyId !== storyId);
+  }
 }
 
 /******************************************************************************
@@ -212,17 +234,17 @@ class User {
     }
   }
   async addFavorite(story) {
-    this.favorites.push(story);
-
     const token = this.loginToken;
-
-    await axios({
+    const response = await axios({
       url: `${BASE_URL}/users/${this.username}/favorites/${story.storyId}`,
       method: "POST",
       params: { token },
     });
+
+    this.favorites.push(new Story(story));
   }
 
+  //removes a favorited story by filtering against currentUser favorites array and deletes from API
   async removeFavorite(story) {
     this.favorites = this.favorites.filter((s) => s.storyId !== story.storyId);
 
@@ -236,8 +258,6 @@ class User {
   }
 
   isFavorite(story) {
-    console.log(this.favorites);
-
     return this.favorites.some((s) => s.storyId === story.storyId);
   }
 }

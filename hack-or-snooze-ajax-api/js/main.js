@@ -15,6 +15,7 @@ const $submitForm = $("#submit-form");
 //navbar buttons/links
 const $navAddStory = $("#nav-add-story");
 const $navFavoriteStories = $("#nav-favorite-stories");
+const $navOwnStories = $("#nav-own-stories");
 const $navLogin = $("#nav-login");
 const $navUserProfile = $("#nav-user-profile");
 const $navLogOut = $("#nav-logout");
