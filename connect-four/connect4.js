@@ -16,7 +16,7 @@ function makeBoard() {
   for (let y = 0; y < HEIGHT; y++) {
     board.push([]);
     for (let x = 0; x < WIDTH; x++) {
-      board[i].push(null);
+      board[y].push(null);
     }
   }
 }
@@ -33,7 +33,6 @@ function makeHtmlBoard() {
 
   for (let x = 0; x < WIDTH; x++) {
     const headCell = document.createElement("td");
-    z;
     headCell.setAttribute("id", x);
     top.append(headCell);
   }
@@ -54,11 +53,11 @@ function makeHtmlBoard() {
 /** findSpotForCol: given column x, return top empty y (null if filled) */
 
 function findSpotForCol(x) {
-  //loop through each column to check if the lowest td on #board has children. If the td does not have children, return the i value.
-  for (let i = HEIGHT - 1; i >= 0; i--) {
-    let column = document.getElementById(`${i}-${x}`);
+  //loop through each column to check if the lowest td on #board has children. If the td does not have children, return the y value.
+  for (let y = HEIGHT - 1; y >= 0; y--) {
+    let column = document.getElementById(`${y}-${x}`);
     if (column.children.length === 0) {
-      return i;
+      return y;
     }
   }
 
