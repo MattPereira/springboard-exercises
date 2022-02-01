@@ -12,10 +12,10 @@ let currPlayer = 1; // active player: 1 or 2
 const board = []; // array of rows, each row is array of cells  (board[y][x])
 
 function makeBoard() {
-  //sets the board const to an array of rows and each row is an array of cells
-  for (let i = 0; i < HEIGHT; i++) {
+  //sets the board to an array of rows y tall and each row is an array of cells x wide, and each value in every array starts as null
+  for (let y = 0; y < HEIGHT; y++) {
     board.push([]);
-    for (let j = 0; j < WIDTH; j++) {
+    for (let x = 0; x < WIDTH; x++) {
       board[i].push(null);
     }
   }
@@ -33,6 +33,7 @@ function makeHtmlBoard() {
 
   for (let x = 0; x < WIDTH; x++) {
     const headCell = document.createElement("td");
+    z;
     headCell.setAttribute("id", x);
     top.append(headCell);
   }
@@ -53,7 +54,7 @@ function makeHtmlBoard() {
 /** findSpotForCol: given column x, return top empty y (null if filled) */
 
 function findSpotForCol(x) {
-  //loop through each column using template literal and check if the td has children
+  //loop through each column to check if the lowest td on #board has children. If the td does not have children, return the i value.
   for (let i = HEIGHT - 1; i >= 0; i--) {
     let column = document.getElementById(`${i}-${x}`);
     if (column.children.length === 0) {
@@ -120,7 +121,7 @@ function handleClick(evt) {
 
 function checkForWin() {
   function _win(cells) {
-    // Check four cells to see if they're all color of current player
+    // Check four cells to see if they're all number (1 or 2) of current player
     //  - cells: list of four (y, x) cells
     //  - returns true if all are legal coordinates & all match currPlayer
 
