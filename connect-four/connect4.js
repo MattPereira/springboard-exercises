@@ -134,10 +134,10 @@ function checkForWin() {
     );
   }
 
-  //creates what win condition arrays look like
+  //creates what win condition arrays will look like
   for (let y = 0; y < HEIGHT; y++) {
     for (let x = 0; x < WIDTH; x++) {
-      //four in a row horizontally array
+      //four in a row horizontally array  pattern
       const horiz = [
         [y, x],
         [y, x + 1],
@@ -145,7 +145,7 @@ function checkForWin() {
         [y, x + 3],
       ];
 
-      //four in a row vertically array
+      //four in a row vertically array pattern
       const vert = [
         [y, x],
         [y + 1, x],
@@ -153,7 +153,7 @@ function checkForWin() {
         [y + 3, x],
       ];
 
-      //four in a row diagonal to the right
+      //four in a row diagonal to the right pattern
       const diagDR = [
         [y, x],
         [y + 1, x + 1],
