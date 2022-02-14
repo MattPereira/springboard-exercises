@@ -1,0 +1,20 @@
+{% extends 'base.html'  %}
+{% block title %}Story Selections{% endblock %}
+
+{% block content %}
+<div class="container col-6">
+    <h1 class="text-center">Choose Madlib Story</h1>
+    <form action="/madlib_form">
+        <select class="form-select mb-3" name="story_id">
+        {% for story in stories %}
+        <option value="{{ story.inst }}">{{ story.title }}</option>
+        {% endfor %}
+        </select>
+        <div class="d-grid">
+            <button class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</div>
+
+
+{% endblock %}
