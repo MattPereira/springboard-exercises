@@ -1,0 +1,31 @@
+{% extends 'base.html'  %}
+{% block title %}Questions {% endblock %}
+
+{% block content %}
+
+
+
+<form action="/answer" method="POST">
+
+    <p class="lead">{{question}} </p>
+
+    {% for choice in choices %}
+    <div class="mb-3">
+        <input type="radio" name="answer" value="{{choice}}">
+        <label for="">{{choice}}</label>
+    </div>
+
+    {% endfor %}
+
+    {% if text == True%}
+    <div>
+        <div>
+            <label for="comments">Comments:</label>
+        </div>
+        <textarea name="text"></textarea>
+    </div>
+    {% endif %}
+    <button class="btn btn-success">SUBMIT</button>
+</form>
+
+{% endblock %}

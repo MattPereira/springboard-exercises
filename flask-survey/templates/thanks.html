@@ -1,0 +1,24 @@
+{% extends 'base.html'  %}
+{% block title %}Start Survey{% endblock %}
+
+{% block content %}
+
+<h1>You Completed the {{survey.title}}</h1>
+<p class="lead">Here are your responses:</p>
+
+
+<table class="table table-bordered">
+    <tbody>
+        {% for i in range(survey.questions|length) %}
+        <tr>
+            <td>{{survey.questions[i].question}}</td>
+            <td>{{responses[i]}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+
+
+{% endblock %}

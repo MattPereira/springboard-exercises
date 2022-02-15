@@ -1,0 +1,18 @@
+{% extends 'base.html'  %}
+{% block title %}Choose Survey{% endblock %}
+
+{% block content %}
+
+<h1>CHOOSE A SURVEY:</h1>
+<form action="/start" method="POST" >
+    <select class="form-select" name="survey" id="">
+        {% for survey in surveys.keys() %}
+        <option value="{{survey}}">{{survey}}</option>
+        {% endfor %}
+    </select>
+    <button class="btn btn-primary mt-3">SELECT</button>
+</form>
+
+
+
+{% endblock %}

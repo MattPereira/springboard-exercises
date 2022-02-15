@@ -13,3 +13,8 @@ def three_odd_numbers(nums):
         >>> three_odd_numbers([1, 2, 3, 3, 2])
         False
     """
+
+    #somehow extract all sets of 3 nums and loop over them to sum and see if always odd
+
+    for i in range(len(nums)):
+        range(i,i+3)
