@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, flash
+from flask import Flask, make_response, render_template, request, redirect, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
 
 from surveys import surveys
@@ -11,72 +11,90 @@ app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 debug = DebugToolbarExtension(app)
 
 
-RESPONSES = []
-SURVEY_CHOICE = []
-
-
 @app.route('/')
-def choose_survey():
+def show_survey_choices():
     """Shows survey choices"""
     return render_template('choose_survey.html', surveys=surveys)
 
 
-@app.route('/start', methods=['POST'])
-def title_page():
+@app.route('/', methods=['POST'])
+def choose_survey():
     """Shows survey information"""
     # add survey to SURVEY_CHOICE list
-    choice = request.form['survey']
-    survey = surveys.get(choice)
-    SURVEY_CHOICE.append(survey)
+    survey_id = request.form['survey_id']
 
-    print(SURVEY_CHOICE[0])
+    # prevent repeating a completed survey
+    if request.cookies.get(f'completed_{survey_id}'):
+        return 'NO SURVEY FOR YOU! (please choose a survey you have not completed)'
 
-    # add variables to display on survey start page
-    title = survey.title
-    instructions = survey.instructions
-    return render_template('start_survey.html', title=title, instructions=instructions)
+    survey = surveys[survey_id]
+
+    session['current_survey'] = survey_id
+
+    return render_template('start_survey.html', survey=survey)
+
+
+@app.route('/begin', methods=['POST'])
+def start_survey():
+    """clear session of response data and redirect to first survey question"""
+    session['responses'] = []
+
+    return redirect('/questions/0')
 
 
 @app.route('/questions/<int:num>')
 def show_question(num):
     """Shows form asking current question"""
-    survey = SURVEY_CHOICE[0]
+    survey = surveys[session['current_survey']]
     questions = survey.questions
 
-    if num != len(RESPONSES):
+    if num != len(session['responses']):
         flash('INVALID QUESTION URL! NO HACKING ALLOWED!')
-        return redirect(f'/questions/{len(RESPONSES)}')
+        return redirect(f'/questions/{len(session["responses"])}')
 
-    if len(RESPONSES) == len(questions):
+    if len(session['responses']) == len(questions):
         return redirect('/thanks')
 
     question = questions[num].question
     choices = questions[num].choices
     text = questions[num].allow_text
-    print(text)
 
     return render_template('questions.html', question=question, choices=choices, text=text)
 
 
 @app.route('/answer', methods=['POST'])
 def add_answer():
-    """add answer to RESPONSES"""
-    answer = request.form['answer']
+    """add answer to session['responses']"""
+
+    answer = request.form.get('answer', 'no response')
     text = request.form.get("text", "")
-    # Add to pretend DB
-    RESPONSES.append(answer)
 
-    survey = SURVEY_CHOICE[0]
+    # Adds the answer to session['responses']
+    responses = session['responses']
+    responses.append({'answer': answer, 'text': text})
+    session['responses'] = responses
 
-    if len(RESPONSES) == len(survey.questions):
+    survey = surveys[session['current_survey']]
+
+    if len(session['responses']) == len(survey.questions):
         return redirect('/thanks')
 
-    return redirect(f"/questions/{len(RESPONSES)}")
+    return redirect(f"/questions/{len(responses)}")
 
 
 @app.route('/thanks')
 def thank_user():
 
-    survey = SURVEY_CHOICE[0]
+    survey = surveys[session['current_survey']]
+    responses = session['responses']
 
-    return render_template("thanks.html", responses=RESPONSES, survey=survey)
+    html = render_template("thanks.html", responses=responses, survey=survey)
+
+    res = make_response(html)
+
+    res.set_cookie(
+        f'completed_{session["current_survey"]}', "true", max_age=30)
+
+    return res
+
+    # Set cookie noting this survey is done so they can't re-do it

@@ -4,8 +4,8 @@
 {% block content %}
 
 <h1>CHOOSE A SURVEY:</h1>
-<form action="/start" method="POST" >
-    <select class="form-select" name="survey" id="">
+<form method="POST" >
+    <select class="form-select" name="survey_id" id="">
         {% for survey in surveys.keys() %}
         <option value="{{survey}}">{{survey}}</option>
         {% endfor %}

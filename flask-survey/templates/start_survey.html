@@ -3,9 +3,9 @@
 
 {% block content %}
 
-    <h1>{{title}}</h1>
-    <p>{{instructions}}</p>
-    <form action="/questions/0">
+    <h1>{{survey.title}}</h1>
+    <p>{{survey.instructions}}</p>
+    <form action="/begin" method="POST">
         <button class="btn btn-primary">Start Survey</button>
     </form>
 

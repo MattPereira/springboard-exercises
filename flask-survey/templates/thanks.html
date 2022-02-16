@@ -12,7 +12,11 @@
         {% for i in range(survey.questions|length) %}
         <tr>
             <td>{{survey.questions[i].question}}</td>
-            <td>{{responses[i]}}</td>
+            <td>{{responses[i].answer}} 
+                {% if responses[i].text != "" %}
+                    : {{responses[i].text}}
+                {% endif %}
+            </td>
         </tr>
         {% endfor %}
     </tbody>
