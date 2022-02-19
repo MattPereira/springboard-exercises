@@ -1,0 +1,73 @@
+{% extends 'base.html'  %}
+{% block title %}Boggle Game{% endblock %}
+
+{% block content %}
+
+    <div class="row align-items-center mt-md-5">
+        <div class="col-md-4">
+            <div class="row text-center p-3 bg-primary text-white" id="endGame">
+                <h3>COUNTDOWN</h3>
+                <h3 id="countdown" class="rounded">
+                    <!-- display countdown -->
+                </h3>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="row text-center p-3 bg-dark text-white">
+                <h3>GAMES PLAYED</h3>
+                <h3>{{session['play_count']}}</h3>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="row text-center bg-secondary text-white p-3">
+                <h3>SCORE : <b id="currScore">0</b></h3>
+                <h3>RECORD : {{session['high_score']}}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="row my-4 align-items-center">
+        <div class="col-6">
+            <form action="" id="add-word">
+                <div class="row g-2 align-items-center">
+                    <div class="col-md-8">
+                        <input type="text" name="word" id="word" class="form-control" autofocus>
+                    </div>
+                    <div class="col-md-4 d-grid">
+                        <button class="btn btn-success">Guess</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-6">
+            <div id="msg">
+                <!-- message flashes here -->
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <table class="table table-bordered text-center border-dark">
+                {% for row in board %}
+                    <tr>
+                        {% for letter in row %}
+                            <td class="py-3 display-5">{{letter}}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="col-md-4 bg-dark rounded text-white">
+            <h4 class="text-center mt-3">WORD BANK</h4>
+            <div class="border border-dark border-2 p-2">
+                <div id="word-bank" class="text-center">
+                    <!-- display word bank here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}
