@@ -1,0 +1,50 @@
+{% extends 'base.html'  %}
+{% block title %}Edit User{% endblock %}
+
+{% block content %}
+
+<h1 class="text-center my-5">Edit User</h1>
+
+
+
+<form action="/users/{{user.id}}/edit" method="POST">
+    <div class="row justify-content-center align-items-center mb-3">
+        <div class="col-auto">
+            <label for="first" class="col-form-label">First Name</label>
+        </div>
+        <div class="col-auto">
+            <input type="text" class="form-control" name="first_name"  value="{{user.first_name}}">
+        </div>
+    </div>
+    <div class="row justify-content-center align-items-center mb-3">
+        <div class="col-auto">
+            <label for="first" class="col-form-label">Last Name</label>
+        </div>
+        <div class="col-auto">
+            <input type="text" class="form-control" name="last_name" value="{{user.last_name}}">
+        </div>
+    </div>
+    <div class="row justify-content-center align-items-center mb-3">
+        <div class="col-auto">
+            <label for="first" class="col-form-label">Img Url</label>
+        </div>
+        <div class="col-auto">
+            <input type="text" class="form-control" name="img_url" value="{{user.img_url}}">
+        </div>
+    </div>
+    <div class="row justify-content-center mb-3">
+        <div class="col-2">
+            <div class="d-grid">
+                <button type="submit" class="btn btn-success">SAVE</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="row justify-content-center">
+    <div class="col-3 d-flex justify-content-center">
+        <a href="/users/{{user.id}}">CANCEL</a>
+    </div>
+</div>
+
+{% endblock %}

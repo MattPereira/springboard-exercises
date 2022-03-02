@@ -1,0 +1,42 @@
+{% extends 'base.html'  %}
+{% block title %}Add New User{% endblock %}
+
+{% block content %}
+
+<h1 class="text-center my-5">Create a User</h1>
+
+<form action="/users/new" method="POST">
+    <div class="row justify-content-center align-items-center mb-3">
+        <div class="col-auto">
+            <label for="first" class="col-form-label">First Name</label>
+        </div>
+        <div class="col-auto">
+            <input type="text" class="form-control" name="first_name">
+        </div>
+    </div>
+    <div class="row justify-content-center align-items-center mb-3">
+        <div class="col-auto">
+            <label for="first" class="col-form-label">Last Name</label>
+        </div>
+        <div class="col-auto">
+            <input type="text" class="form-control" name="last_name">
+        </div>
+    </div>
+    <div class="row justify-content-center align-items-center mb-3">
+        <div class="col-auto">
+            <label for="first" class="col-form-label">Img Url</label>
+        </div>
+        <div class="col-auto">
+            <input type="text" class="form-control" name="img_url">
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-3">
+            <div class="d-grid">
+                <button class="btn btn-success">Add User</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% endblock %}
