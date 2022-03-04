@@ -1,0 +1,32 @@
+{% extends 'base.html'  %}
+{% block title %}User Details{% endblock %}
+
+{% block content %}
+<a href="/users"><button class="btn btn-secondary my-5">ALL USERS</button></a>
+
+
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <img src="{{user.img_url}}" class="img-fluid"alt="">
+    </div>
+    <div class="col-md-6">
+        <h1>{{user.full_name}}</h1>
+        <div class="d-flex mb-3">
+            <a href="/users/{{user.id}}/edit" class="btn btn-primary me-3">EDIT</a>
+            <form action="/users/{{user.id}}/delete" method="POST">
+                <button class="btn btn-danger ms-3">DELETE</button></a>
+            </form>
+        </div>
+        <h3>Posts</h3>
+        <ul>
+            {% for post in posts %}
+                <li><a href="/posts/{{post.id}}">{{post.title}}</a></li>
+            {% endfor %}
+        </ul>
+        <a href="/users/{{user.id}}/posts/new"><button class="btn btn-primary">ADD POST</button></a>
+    </div>
+</div>
+
+
+{% endblock %}

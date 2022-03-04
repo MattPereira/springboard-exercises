@@ -34,17 +34,12 @@
     </div>
     <div class="row justify-content-center mb-3">
         <div class="col-2">
-            <div class="d-grid">
-                <button type="submit" class="btn btn-success">SAVE</button>
+            <div class="d-flex">
+                <a href="/users/{{user.id}}" class="btn btn-secondary">Cancel</a>
+                <button type="submit" class="btn btn-success ms-3">Save</button>
             </div>
         </div>
     </div>
 </form>
-
-<div class="row justify-content-center">
-    <div class="col-3 d-flex justify-content-center">
-        <a href="/users/{{user.id}}">CANCEL</a>
-    </div>
-</div>
 
 {% endblock %}

@@ -3,7 +3,14 @@
 
 {% block content %}
 
-<h1>Basic Home Page</h1>
+<a href="/users" class="btn btn-primary my-3">Users</a>
+<h1>Blogly Recent Posts</h1>
 
-<a href="/users">See our users!</a>
+{% for post in posts %}
+<h3>{{post.title}}</h3>
+<p class="lead">{{post.content}}</p>
+<p><i>By {{post.user.full_name}}</i> on {{post.friendly_datetime}}</p>
+{% endfor %}
+
+
 {% endblock %}
