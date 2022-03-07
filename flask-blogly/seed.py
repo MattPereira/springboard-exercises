@@ -1,6 +1,6 @@
 """Seed file to make sample data for Users db"""
 
-from models import User, Post, db
+from models import User, Post, Tag, PostTag, db
 from app import app
 
 # Create all tables
@@ -42,4 +42,29 @@ p9 = Post(title="Ed 3", content="Radical Eds 3rd post", user_id=3)
 
 
 db.session.add_all([p1, p2, p3, p4, p5, p6, p7, p8, p9])
+db.session.commit()
+
+
+# Add tags
+
+t1 = Tag(name="ez_clap")
+t2 = Tag(name="kekw")
+t3 = Tag(name="pepehands")
+t4 = Tag(name="poggers")
+t5 = Tag(name="doomer")
+
+
+db.session.add_all([t1, t2, t3, t4, t5])
+db.session.commit()
+
+
+# Add posts_tags
+
+pt1 = PostTag(post_id=1, tag_id=3)
+pt2 = PostTag(post_id=2, tag_id=3)
+pt3 = PostTag(post_id=3, tag_id=2)
+pt4 = PostTag(post_id=3, tag_id=1)
+pt5 = PostTag(post_id=1, tag_id=5)
+
+db.session.add_all([pt1, pt2, pt3, pt4, pt5])
 db.session.commit()

@@ -1,7 +1,7 @@
 from unittest import TestCase
 
 from app import app
-from models import db, User, Post
+from models import db, User, Post, Tag
 
 # Use test database and don't clutter tests with SQL
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///blogly_test'
@@ -23,6 +23,7 @@ class UserViewsTestCase(TestCase):
     def setUp(self):
         """Add sample user."""
 
+        Tag.query.delete()
         Post.query.delete()
         User.query.delete()
 
@@ -33,7 +34,7 @@ class UserViewsTestCase(TestCase):
         self.user_id = user.id
         self.user = user
 
-        post = Post(title="test title", content="test content",
+        post = Post(title="test post title", content="test content",
                     user_id=self.user_id)
 
         db.session.add(post)
@@ -41,6 +42,13 @@ class UserViewsTestCase(TestCase):
 
         self.post_id = post.id
         self.post = post
+
+        tag = Tag(name='test tag')
+        db.session.add(tag)
+        db.session.commit()
+
+        self.tag_id = tag.id
+        self.tag = tag
 
     def tearDown(self):
         """Clean up any fouled transaction."""
@@ -129,7 +137,7 @@ class UserViewsTestCase(TestCase):
             resp = client.get(f'/posts/{self.post_id}')
             html = resp.get_data(as_text=True)
 
-            self.assertIn('test title</h1>', html)
+            self.assertIn('test post title</h1>', html)
             self.assertIn('test content</p>', html)
             self.assertIn('By Bob Belcher</i>', html)
 
@@ -140,8 +148,8 @@ class UserViewsTestCase(TestCase):
 
             self.assertIn(
                 f'<form action="/posts/{self.post_id}/edit" method="POST">', html)
-            self.assertIn('value="test title"', html)
-            self.assertIn('placeholder="test content"', html)
+            self.assertIn('value="test post title"', html)
+            self.assertIn('>test content</textarea>', html)
 
     def test_edit_post(self):
         with app.test_client() as client:
@@ -153,7 +161,7 @@ class UserViewsTestCase(TestCase):
 
             self.assertIn('edited title', html)
             self.assertIn('edited content', html)
-            self.assertIn('Post edited title has been edited!', html)
+            self.assertIn('Post &#34;edited title&#34; has been edited!', html)
 
     def test_delete_post(self):
         with app.test_client() as client:
@@ -161,5 +169,64 @@ class UserViewsTestCase(TestCase):
                 f"/posts/{self.post_id}/delete", follow_redirects=True)
             html = resp.get_data(as_text=True)
 
-            self.assertIn("Post test title has been deleted!", html)
-            self.assertNotIn(">test title</a>", html)
+            self.assertIn("Post test post title has been deleted!", html)
+            self.assertNotIn(">test post title</a>", html)
+
+    def test_list_tags(self):
+        with app.test_client() as client:
+            resp = client.get('/tags')
+            html = resp.get_data(as_text=True)
+
+            self.assertIn('>test tag</a></li>', html)
+            self.assertIn('>Add Tag</a>', html)
+
+    def test_show_tag(self):
+        with app.test_client() as client:
+            resp = client.get(f'/tags/{self.tag_id}')
+            html = resp.get_data(as_text=True)
+
+            self.assertIn('<h1>test tag</h1>', html)
+            self.assertIn('>Edit</button>', html)
+            self.assertIn('>Delete</button>', html)
+
+    def test_new_tag_form(self):
+        with app.test_client() as client:
+            resp = client.get('/tags/new')
+            html = resp.get_data(as_text=True)
+
+            self.assertIn('<h1>Create a tag</h1>', html)
+            self.assertIn('test post title</label>', html)
+
+    def test_create_tag(self):
+        with app.test_client() as client:
+            d = {"name": "yikes"}
+            resp = client.post(f'/tags/new', data=d, follow_redirects=True)
+            html = resp.get_data(as_text=True)
+
+            self.assertIn('yikes</a></li>', html)
+
+    def test_edit_tag_form(self):
+        with app.test_client() as client:
+            resp = client.get(f'/tags/{self.tag_id}/edit')
+            html = resp.get_data(as_text=True)
+
+            self.assertIn('<h1>Edit the "test tag" tag</h1>', html)
+            self.assertIn('test post title</label>', html)
+
+    def test_edit_tag(self):
+        with app.test_client() as client:
+            d = {"name": "edited tag"}
+            resp = client.post(
+                f'/tags/{self.tag_id}/edit', data=d, follow_redirects=True)
+            html = resp.get_data(as_text=True)
+
+            self.assertIn('edited tag</a></li>', html)
+            self.assertIn('Tag &#34;edited tag&#34; has been edited!', html)
+
+    def test_delete_tag(self):
+        with app.test_client() as client:
+            resp = client.post(
+                f'/tags/{self.tag_id}/delete', follow_redirects=True)
+            html = resp.get_data(as_text=True)
+
+            self.assertNotIn('test tag</a></li>', html)

@@ -1,0 +1,29 @@
+{% extends 'base.html'  %}
+{% block title %}Add New Post{% endblock %}
+
+{% block content %}
+
+
+<form class="mt-5">
+<h1>Edit the "{{tag.name}}" tag</h1>
+    <div class="row">
+        <div class="col-auto">
+            <label for="name" class="col-form-label">Name: </label>
+        </div>
+        <div class="col-auto">
+            <input type="text" name="name" value="{{tag.name}}" class="form-control">
+            <div class="d-flex justify-content-end mt-3">
+                <button formmethod="get" formaction="/tags/{{tag.id}}" class="btn btn-secondary">Cancel</button>
+                <button formmethod="post" formaction="/tags/{{tag.id}}/edit" class="btn btn-primary ms-3">Edit</button>
+            </div>
+        </div>
+    </div>
+    {% for post in posts%}
+    <div>
+        <input type="checkbox" value="{{post.id}}" name="posts" {% if post in tag.posts %} checked {% endif %}>
+        <label for="">{{post.title}}</label>        
+    </div>
+    {% endfor %}
+</form>
+
+{% endblock %}

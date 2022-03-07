@@ -3,13 +3,26 @@
 
 {% block content %}
 
-<a href="/users" class="btn btn-primary my-3">Users</a>
+<div class="row">
+    <div class="col-auto">
+        <a href="/users" class="btn btn-primary my-3">Users</a>
+    </div>
+    <div class="col-auto">
+        <a href="/tags" class="btn btn-success my-3">Tags</a>
+    </div>
+</div>
 <h1>Blogly Recent Posts</h1>
 
 {% for post in posts %}
 <h3>{{post.title}}</h3>
 <p class="lead">{{post.content}}</p>
 <p><i>By {{post.user.full_name}}</i> on {{post.friendly_datetime}}</p>
+<h6>
+    Tags:
+    {% for tag in post.tags%}
+    <a href="/tags/{{tag.id}}"><span class="badge bg-primary">{{tag.name}}</span></a>
+    {% endfor %}
+</h6>
 {% endfor %}
 
 

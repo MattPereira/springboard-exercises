@@ -3,34 +3,39 @@
 
 {% block content %}
 
-<h1 class="text-center my-5">Edit Post</h1>
+<h1 class="my-5">Edit Post</h1>
 
 <form action="/posts/{{post.id}}/edit" method="POST">
-    <div class="row justify-content-center align-items-center mb-3">
-        <div class="col-md-2">
+    <div class="row mb-3">
+        <div class="col-md-1">
             <label for="title" class="col-form-label">Title</label>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-5">
             <input type="text" class="form-control" name="title" value="{{post.title}}">
         </div>
     </div>
-    <div class="row justify-content-center align-items-center mb-3">
-        <div class="col-md-2">
+    <div class="row mb-3">
+        <div class="col-md-1">
             <label for="content" class="col-form-label">Content</label>
         </div>
-        <div class="col-md-6">
-            <textarea class="form-control" name="content" placeholder="{{post.content}}"></textarea>
+        <div class="col-md-5">
+            <textarea class="form-control" name="content">{{post.content}}</textarea>
         </div>
     </div>
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+    {% for tag in tags %}
+    <div>
+        <input type="checkbox" class="form-check-input" name="tags" value="{{tag.id}}" {% if tag in post.tags %} checked {% endif %}>
+        <label for="{{tag.name}}" class="form-check-class">{{tag.name}}</label>
+    </div>
+    {% endfor %}
+    <div class="row">
+        <div class="col-md-6">
             <div class="d-flex justify-content-end">
-                <a href="/posts/{{post.id}}" class="btn btn-warning">Cancel</a>
+                <a href="/posts/{{post.id}}" class="btn btn-secondary">Cancel</a>
                 <button type="submit" class="btn btn-primary ms-3">Edit</button>
             </div>
         </div>
     </div>
-
 </form>
 
 {% endblock %}
