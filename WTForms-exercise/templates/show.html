@@ -1,0 +1,62 @@
+{% extends 'base.html'  %}
+{% block title %}Show Pet{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-10">
+        <h3 class="display-3 text-center bg-dark text-white">{{pet.name}}</h3>
+        <img src="{{pet.photo_url}}" class="img-fluid" alt="">
+        <div class="bg-primary text-white p-3 mt-2">
+            <p class="lead">AGE : {{pet.age}}</p>
+            <p class="lead">SPECIES : {{pet.species}}</p>
+            <p class="lead">NOTES : {{pet.notes}}</p>
+            <p class="lead">AVAILABLE : {{pet.available}}</p>
+
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center my-3">
+    <div class="col-md-10 text-white">
+        <div class="bg-secondary p-3">
+            <h3 class="display-5 text-center my-3 ">EDIT</h3>
+            <form method="POST">
+                {{form.hidden_tag()}}
+    
+                <div class="row mb-3">
+                    <div class="col-md-2">
+                        {{form.photo_url.label(class_="col-form-label")}} :
+                    </div>
+                    <div class="col-md-8">
+                        {{form.photo_url(class_="form-control")}}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-2">
+                        {{form.notes.label(class_="col-form-label")}} :
+                    </div>
+                    <div class="col-md-8">
+                        {{form.notes(class_="form-control")}}
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-md-3">
+                        {{form.available.label(class_="form-check-label")}} :
+                        {{form.available(class_="form-check-input ms-3")}}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-10 d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock %}

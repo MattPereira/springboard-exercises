@@ -1,0 +1,35 @@
+{% extends 'base.html'  %}
+{% block title %}Home Page{% endblock %}
+
+{% block content %}
+
+<h1 class="display-1 text-center">Pet Adoptions</h1>
+<a href="/add" class="btn btn-lg btn-primary">Add A Pet</a>
+
+<div class="row">
+    <div class="col-md-6">
+        <h5 class="display-5 text-center"><u>Available</u></h5>
+        {% for pet in pets%}
+            {% if pet.available %}
+            <img src="{{pet.photo_url}}" class="img-fluid" alt="">
+            <p class="lead">
+                <a href="/{{pet.id}}">{{pet.name}}</a> <b>is available!</b>
+            </p>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div class="col-md-6">
+        <h5 class="display-5 text-center"><u>Unavailable</u></h5>
+        {% for pet in pets%}
+            {% if not pet.available %}
+            <img src="{{pet.photo_url}}" class="img-fluid" alt="">
+            <p class="lead">
+                <a href="/{{pet.id}}">{{pet.name}}</a>
+            </p>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock %}

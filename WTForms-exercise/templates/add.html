@@ -1,0 +1,41 @@
+{% extends 'base.html'  %}
+{% block title %}Add Pet{% endblock %}
+
+{% block content %}
+
+<h1 class="display-2 text-center my-5">Add A Pet For Adoption</h1>
+
+<form method="POST">
+    {{form.hidden_tag()}}
+
+    {% for field in form if field.widget.input_type !='hidden' %}
+    <div class="row justify-content-center mb-3">
+        <div class="col-md-2">
+            {{field.label(class_="col-form-label")}} :
+        </div>
+
+        <div class="col-md-6">
+            {% if field == form.available %}
+            {{field(class_="form-check-input")}}
+            {% else %}
+            {{field(class_="form-control")}}
+            {% endif %}
+
+            {% for err in field.errors %}
+                <small class="form-text text-danger">
+                    {{err}}
+                </small>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+    <div class="row justify-content-center">
+        <div class="col-md-8 d-flex justify-content-end">
+            <a href="/" class="btn btn-secondary" >Cancel</a>
+            <button type="submit" class="btn btn-primary ms-3">Submit</button>
+        </div>
+    </div>
+</form>
+
+
+{% endblock %}
