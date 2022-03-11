@@ -1,6 +1,6 @@
 """Flask app for Cupcakes"""
 from flask import Flask, request, jsonify, render_template
-
+from forms import AddCupcakeForm, AddSearchForm
 from models import db, connect_db, Cupcake
 
 app = Flask(__name__)
@@ -14,8 +14,20 @@ connect_db(app)
 
 @app.route('/')
 def home():
+    # show all cupcakes and form to add new cupcakes
+    form = AddCupcakeForm()
+    search_form = AddSearchForm()
+    return render_template('home.html', form=form, search_form=search_form)
 
-    return render_template('home.html')
+
+@app.route('/api/search')
+def search_cupcakes():
+
+    search_term = request.args['search']
+    cupcake = Cupcake.query.filter(
+        Cupcake.flavor.ilike(f'%{search_term}%')).first()
+
+    return jsonify(cupcake=cupcake.serialize())
 
 
 @app.route('/api/cupcakes')

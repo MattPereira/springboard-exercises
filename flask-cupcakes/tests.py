@@ -145,6 +145,13 @@ class CupcakeViewsTestCase(TestCase):
                 }
             })
 
+    def test_update_cupcake_404(self):
+        with app.test_client() as client:
+            url = f"/api/cupcakes/666"
+            resp = client.patch(url, json=CUPCAKE_DATA_2)
+
+            self.assertEqual(resp.status_code, 404)
+
     def test_delete_cupcake(self):
         with app.test_client() as client:
 
