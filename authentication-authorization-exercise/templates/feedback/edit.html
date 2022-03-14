@@ -1,0 +1,38 @@
+{% extends 'base.html'  %}
+
+{% block title %}Edit Feedback{% endblock%}
+
+
+{% block content %}
+
+<h1 class="display-1 text-center">Edit Feedback</h1>
+<p class="lead text-center">Edit feeback</p>
+
+<form action="/feedback/{{feedback.id}}/update" method="POST">
+
+  {{ form.hidden_tag() }}
+
+  {% for field in form if field.widget.input_type != 'hidden' %}
+  <div class="row mb-3 justify-content-center">
+      <div class="col-md-2">
+        {{ field.label }}
+      </div>
+      <div class="col-md-6">
+        {{ field(class_="form-control") }}
+        {% for error in field.errors %}
+        <span class="form-text text-danger">{{ error }}</span>
+        {% endfor %}
+      </div>
+  </div>
+  {% endfor %}
+  <div class="row justify-content-center">
+      <div class="col-md-8">
+          <div class="d-flex justify-content-end">
+            <button class="btn btn-success" type="submit">Save</button>
+          </div>
+      </div>
+  </div>
+</form>
+
+
+{% endblock %}

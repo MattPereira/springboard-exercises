@@ -1,0 +1,61 @@
+{% extends 'base.html'  %}
+
+{% block title %}User Home{% endblock%}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-9">
+        <div class="row text-center">
+            <div class="col-auto">
+                <p><b><u>USERNAME</u></b></p>
+                <p> {{user.username}}</p>
+            </div>
+            <div class="col-auto">
+                <p><b><u>EMAIL</u></b></p>
+                <p>{{user.email}}</p>
+            </div>
+            <div class="col-auto">
+                <p><b><u>FULL NAME</u></b></p>
+                <p>{{user.first_name}} {{user.last_name}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="d-flex justify-content-end">
+            <form action="/users/{{user.username}}/delete" method="POST">
+                <button type="submit" class="btn btn-danger">Delete Self</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+<h5 class="display-5 text-center">Feedback</h5>
+<div class="d-flex justify-content-center">
+    <a href="/users/{{user.username}}/feedback/add" class="btn btn-primary">Add Feedback</a>
+</div>
+
+
+{% for feedback in user.feedback%}
+
+<div class="card my-3">
+    <div class="card-body">
+        <h5 class="card-title">
+            {{feedback.title}}
+            <form style="display:inline;" action="/feedback/{{feedback.id}}/delete" method="POST">
+                <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+            </form>
+        </h5>
+        <p class="card-text"> {{feedback.content}}</p>
+        <a href="/feedback/{{feedback.id}}/update" class="btn btn-success">Edit</a>
+    </div>
+</div>
+
+
+{% endfor %}
+
+
+{% endblock %}

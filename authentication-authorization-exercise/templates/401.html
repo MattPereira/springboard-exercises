@@ -1,0 +1,17 @@
+{% extends 'base.html'  %}
+
+{% block title %}401 Error{% endblock%}
+
+{% block content %}
+
+{% if session['username']%}
+<div class="alert alert-danger">You are logged in as <b>{{session['username']}}</b>, which is the wrong user for the route you are trying to access!</div>
+
+{% else %}
+<div class="alert alert-danger">You must be logged in to access this route!</div>
+
+{% endif %}
+
+
+
+{% endblock %}

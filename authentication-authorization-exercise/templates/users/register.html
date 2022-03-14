@@ -1,0 +1,31 @@
+{% extends 'base.html'  %}
+
+{% block title %}Register{% endblock%}
+
+{% block content %}
+
+<h1 class="display-1">Register</h1>
+<p class="lead">Register below to join flask feedback!</p>
+
+<form method="POST" action="/register">
+
+  {{ form.hidden_tag() }}
+
+  {% for field in form if field.widget.input_type != 'hidden' %}
+  <p>
+    {{ field.label }}
+    {% if field == form.is_admin %}
+    {{field(class_="form-check-input")}}
+    {% else %}
+    {{ field(class_="form-control") }}
+    {% endif %}
+    {% for error in field.errors %}
+    <span class="form-text text-danger">{{ error }}</span>
+    {% endfor %}
+  </p>
+  {% endfor %}
+
+  <button class="btn btn-success" type="submit">Register</button>
+
+</form>
+{% endblock %}
