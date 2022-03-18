@@ -1,0 +1,20 @@
+STEP ONE:
+
+Note that the follows table has an unusual arrangement: it has two foreign keys to the same table. Why?
+
+>>> Because follows table is used to track both the users that a user is following as well as the users that a user is being followed by.
+
+
+STEP SEVEN:
+
+How is the logged in user being kept track of?
+>>> using the g.user
+
+What is Flask’s g object?
+>>> An object provided by flask. It is a global namespace for holding any data you want during a single app context.
+
+What is the purpose of add_user_to_g?
+>>> It adds a user instance to g.user if session[CURR_USER_KEY] exists
+
+What does @app.before_request mean?
+>>> It is a decorator that executes a function before every request is made.

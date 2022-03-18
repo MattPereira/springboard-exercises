@@ -1,0 +1,30 @@
+Follows
+-
+user_being_followed_id INTEGER FK >- User.id
+user_following_id INTEGER FK >- User.id
+
+
+Likes
+-
+id INTEGER PK
+user_id INTEGER FK >- User.id
+message_id INTEGER FK >- Message.id
+
+User
+-
+id INTEGER PK
+email TEXT
+username TEXT
+image_url TEXT
+header_image_url TEXT
+bio TEXT
+location TEXT
+password TEXT
+
+
+Message
+-
+id INTEGER PK
+text STRING
+timestamp DATETIME
+user_id INTEGER FK >- User.id
