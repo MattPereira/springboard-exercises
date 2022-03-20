@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, render_template, request, flash, redirect, session, g
+from flask import Flask, render_template, request, flash, redirect, session, g, abort, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
 from sqlalchemy.exc import IntegrityError
 
@@ -18,7 +18,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = (
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
-app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = True
+app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', "it's a secret")
 toolbar = DebugToolbarExtension(app)
 
@@ -183,6 +183,19 @@ def users_followers(user_id):
     return render_template('users/followers.html', user=user)
 
 
+########## ME ADDING LIKES ROUTE ############
+@app.route('/users/<int:user_id>/likes')
+def users_likes(user_id):
+
+    if not g.user:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
+
+    user = User.query.get_or_404(user_id)
+
+    return render_template('users/likes.html', user=user)
+
+
 @app.route('/users/follow/<int:follow_id>', methods=['POST'])
 def add_follow(follow_id):
     """Add a follow for the currently-logged-in user."""
@@ -211,6 +224,32 @@ def stop_following(follow_id):
     db.session.commit()
 
     return redirect(f"/users/{g.user.id}/following")
+
+
+@app.route('/messages/<int:message_id>/like', methods=["POST"])
+def add_like(message_id):
+    """Toggle liked status of a message for a logged in user"""
+
+    if not g.user:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
+
+    liked_msg = Message.query.get_or_404(message_id)
+
+    if liked_msg.user_id == g.user.id:
+        flash("Sorry you are not allowed to like your own post!", "danger")
+        return redirect('/')
+
+    if liked_msg not in g.user.likes:
+        g.user.likes.append(liked_msg)
+        db.session.commit()
+    else:
+        g.user.likes.remove(liked_msg)
+        db.session.commit()
+
+    res = {"test": "this response is unnecessary lol"}
+
+    return redirect('/')
 
 
 @app.route('/users/profile', methods=["GET", "POST"])
@@ -293,7 +332,7 @@ def messages_add():
 def messages_show(message_id):
     """Show a message."""
 
-    msg = Message.query.get(message_id)
+    msg = Message.query.get_or_404(message_id)
     return render_template('messages/show.html', message=msg)
 
 
@@ -305,7 +344,12 @@ def messages_destroy(message_id):
         flash("Access unauthorized.", "danger")
         return redirect("/")
 
-    msg = Message.query.get(message_id)
+    msg = Message.query.get_or_404(message_id)
+
+    if msg.user_id != g.user.id:
+        flash("Access unauthorized", "danger")
+        return redirect("/")
+
     db.session.delete(msg)
     db.session.commit()
 
