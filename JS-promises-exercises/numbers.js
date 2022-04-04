@@ -37,10 +37,7 @@ for (let i = 0; i < 4; i++) {
 Promise.all(fourFacts)
   .then((factArr) =>
     factArr.forEach((el) => {
-      console.log(el.data.text);
       $("ul").append($(`<li>${el.data.text}</li>`));
     })
   )
   .catch((err) => console.log(err));
-
-////////////// PART TWO: DECK OF CARDS ////////////////
