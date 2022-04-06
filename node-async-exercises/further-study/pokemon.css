@@ -1,0 +1,17 @@
+#poke-show {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+  }
+  
+  .card {
+    width: 250px;
+    background-color: lightsteelblue;
+    border: 8px solid steelblue;
+    border-radius: 8px;
+    padding: 10px;
+  }
+  
+  .card p {
+    font-family: sans-serif;
+  }
