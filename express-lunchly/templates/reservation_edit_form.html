@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Reservation{% endblock %}
+
+{% block content %}
+
+
+<form action="/{{ reservation.id }}/edit-reservation/" method="POST">
+  <h1 class="text-center">Edit Reservation</h1>
+
+  <div class="form-group">
+    <label for="start">Start </label>
+      <input id="start"
+             class="form-control"
+             name="startAt"
+             value="{{ reservation.startAt }}">
+  </div>
+  <div class="form-group">
+    <label for="last-name"># of Guests:</label>
+        <input id="num-guests"
+               class="form-control"
+               name="numGuests"
+               value="{{ reservation.numGuests }}">
+  </div>
+  <div class="form-group">
+    <label for="notes">Notes</label>
+      <input id="notes"
+             class="form-control"
+             name="notes"
+             value="{{ reservation.notes }}">
+  </div>
+  <button class="btn btn-primary">Edit</button>
+  <a href="/{{ reservation.customerId }}/" class="btn btn-danger">Cancel</a>
+</form>
+  
+{% endblock %}
