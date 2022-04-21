@@ -6,7 +6,6 @@
 
 ##################### CANNOT FIGURE OUT HOW TO STOP APP IMPORT FROM MOVING TO TOP ON SAVE ##########################
 
-from app import app
 import os
 from unittest import TestCase
 from sqlalchemy import exc
@@ -22,6 +21,7 @@ os.environ['DATABASE_URL'] = "postgresql:///warbler-test"
 
 
 # Now we can import app
+from app import app
 
 # Create our tables (we do this here, so we only create the tables
 # once for all tests --- in each test, we'll delete the data
@@ -164,7 +164,7 @@ class UserModelTestCase(TestCase):
             User.signup("Pancakes", "pancake@email.com", None, None)
 
     ####### AUTHENTICATOIN TESTS #############
-    def test_valid_authenticat(self):
+    def test_valid_authenticate(self):
         u = User.authenticate(self.u1.username, "amadeus")
 
         self.assertIsNotNone(u)

@@ -34,8 +34,8 @@ db.create_all()
 app.config['WTF_CSRF_ENABLED'] = False
 
 
-class MessageViewTestCase(TestCase):
-    """Test views for messages."""
+class UserViewTestCase(TestCase):
+    """Test views for users."""
 
     def setUp(self):
         """Create test client, add sample data."""

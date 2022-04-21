@@ -37,7 +37,7 @@ $(document).ready(function () {
   let $btn = $("button");
   let $cardShow = $("#card-show");
   //grab a new deck_id on page load
-  axios.get(`${baseURL}/new/shuffle/?decl_count=1`).then((res) => {
+  axios.get(`${baseURL}/new/shuffle/?deck_count=1`).then((res) => {
     deckId = res.data.deck_id;
   });
 
