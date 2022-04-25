@@ -118,6 +118,7 @@ describe("findAll", function () {
         lastName: "U1L",
         email: "u1@email.com",
         isAdmin: false,
+        jobs: [testJobIds[0], testJobIds[1]],
       },
       {
         username: "u2",
@@ -125,6 +126,7 @@ describe("findAll", function () {
         lastName: "U2L",
         email: "u2@email.com",
         isAdmin: false,
+        jobs: [],
       },
     ]);
   });
@@ -233,13 +235,12 @@ describe("remove", function () {
 
 describe("applyToJob", function () {
   test("works", async function () {
-    await User.applyToJob("u1", testJobIds[0]);
+    await User.applyToJob("u1", testJobIds[2]);
 
-    const res = await db.query(
-      "SELECT * FROM applications WHERE username='u1'"
-    );
-    expect(res.rows.length).toEqual(1);
-    expect(res.rows).toEqual([{ username: "u1", job_id: testJobIds[0] }]);
+    const res = await db.query("SELECT * FROM applications WHERE job_id=$1", [
+      testJobIds[2],
+    ]);
+    expect(res.rows).toEqual([{ username: "u1", job_id: testJobIds[2] }]);
   });
 
   test("not found error if no such job", async function () {

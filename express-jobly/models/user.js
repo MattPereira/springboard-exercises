@@ -97,21 +97,41 @@ class User {
 
   /** Find all users.
    *
-   * Returns [{ username, first_name, last_name, email, is_admin }, ...]
+   * Returns [{ username, first_name, last_name, email, is_admin, jobs }, ...]
+   *
+   * where jobs is [jobId, jobId, ...]
    **/
 
   static async findAll() {
-    const result = await db.query(
+    const userResults = await db.query(
       `SELECT username,
                   first_name AS "firstName",
                   last_name AS "lastName",
                   email,
                   is_admin AS "isAdmin"
-           FROM users
+           FROM users as u
            ORDER BY username`
     );
 
-    return result.rows;
+    const users = userResults.rows;
+
+    const appResults = await db.query(
+      `SELECT username, job_id
+        FROM applications;`
+    );
+
+    const applications = appResults.rows;
+
+    users.map((u) => {
+      u.jobs = [];
+      for (let row of applications) {
+        if (row["username"] === u.username) {
+          u.jobs.push(row["job_id"]);
+        }
+      }
+    });
+
+    return users;
   }
 
   /** Given a username, return data about user.
