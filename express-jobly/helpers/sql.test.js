@@ -13,18 +13,18 @@ describe("SQL for partial updates", function () {
     });
   });
 
-  it("works with 2 items", function () {
+  it("works with 3 items", function () {
     const result = sqlForPartialUpdate(
-      { firstName: "Bojack", lastName: "Horseman" },
+      { firstName: "Bojack", lastName: "Horseman", age: 31 },
       { firstName: "first_name", lastName: "last_name" }
     );
     expect(result).toEqual({
-      setCols: '"first_name"=$1, "last_name"=$2',
-      values: ["Bojack", "Horseman"],
+      setCols: '"first_name"=$1, "last_name"=$2, "age"=$3',
+      values: ["Bojack", "Horseman", 31],
     });
   });
 
-  it("throws error if empty dataToUpdate input", function () {
+  it("throws error if empty dataToUpdate argument", function () {
     try {
       sqlForPartialUpdate(
         {},
@@ -33,5 +33,13 @@ describe("SQL for partial updates", function () {
     } catch (e) {
       expect(e instanceof BadRequestError).toBeTruthy();
     }
+  });
+
+  it("works with 1 item", function () {
+    const result = sqlForPartialUpdate({ age: 31 });
+    expect(result).toEqual({
+      setCols: '"first_name"=$1',
+      values: ["Matt"],
+    });
   });
 });

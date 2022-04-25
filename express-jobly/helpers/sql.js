@@ -4,12 +4,12 @@ const { BadRequestError } = require("../expressError");
  * Helper for making partial update queries
  *
  * The function that calls it can use it to make the SET clause
- * of SLQ UPDATE statement and to pass parameter values for
+ * of SLQ UPDATE statement and to pass parameter variable values for
  * the parameterized query
  *
  * @param dataToUpdate {Object} {field1: newVal, field2: newVal, ...}
  * @param jsToSql {Object} converts js-style data fields to database column names
- *  like {firstName: "first_name", lastName: "last_name", email: "email"}
+ *  like {firstName: "first_name", lastName: "last_name"}
  *  (Only needed if multi-word data field otherwise it will already match
  *  database column name)
  *
