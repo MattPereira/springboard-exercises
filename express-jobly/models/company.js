@@ -69,12 +69,12 @@ class Company {
     // Add each possible search term to whereExpressions and queryValues
     // to generate proper SQL WHERE clause
 
-    if (minEmployees) {
+    if (minEmployees !== undefined) {
       queryValues.push(minEmployees);
       whereExpressions.push(`num_employees >= $${queryValues.length}`);
     }
 
-    if (maxEmployees) {
+    if (maxEmployees !== undefined) {
       queryValues.push(maxEmployees);
       whereExpressions.push(`num_employees <= $${queryValues.length}`);
     }
@@ -118,6 +118,19 @@ class Company {
     const company = companyRes.rows[0];
 
     if (!company) throw new NotFoundError(`No company: ${handle}`);
+
+    const jobsRes = await db.query(
+      `SELECT id,
+              title,
+              salary,
+              equity
+          FROM jobs
+          WHERE company_handle = $1
+          ORDER BY id`,
+      [handle]
+    );
+
+    company.jobs = jobsRes.rows;
 
     return company;
   }

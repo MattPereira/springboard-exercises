@@ -33,11 +33,15 @@ class Job {
 
   /** Find all jobs.
    *
+   * searchFilters (all optional):
+   * -title (will find case-insensitive, partial matches)
+   * -minSalary
+   * -hasEquity (true returns only jobs with equity > 0)
    *
    * Returns [{id, title, salary, equity, companyHandle, companyName}, ...]
    */
 
-  static async findAll() {
+  static async findAll(searchFilters = {}) {
     let query = `SELECT j.id,
                         j.title,
                         j.salary,
@@ -48,7 +52,36 @@ class Job {
                         LEFT JOIN companies AS c
                         ON j.company_handle = c.handle`;
 
-    const jobsRes = await db.query(query);
+    let whereExpressions = [];
+    let queryValues = [];
+
+    const { title, minSalary, hasEquity } = searchFilters;
+
+    // Add each possible search term to queryValues and whereExpressions
+    // to generate proper SQL WHERE clause and parameter values for parameterized query
+
+    if (minSalary !== undefined) {
+      queryValues.push(minSalary);
+      whereExpressions.push(`j.salary >= $${queryValues.length}`);
+    }
+
+    if (hasEquity === true) {
+      whereExpressions.push(`j.equity > 0`);
+    }
+
+    if (title !== undefined) {
+      queryValues.push(`%${title}%`);
+      whereExpressions.push(`j.title ILIKE $${queryValues.length}`);
+    }
+
+    if (whereExpressions.length > 0) {
+      query = query + " WHERE " + whereExpressions.join(" AND ");
+    }
+
+    // Finalize query and return results
+    query += " ORDER BY j.id";
+
+    const jobsRes = await db.query(query, queryValues);
 
     return jobsRes.rows;
   }
