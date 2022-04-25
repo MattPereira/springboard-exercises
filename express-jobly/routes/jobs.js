@@ -48,9 +48,18 @@ router.post("/", ensureIsAdmin, async function (req, res, next) {
  */
 
 router.get("/", async function (req, res, next) {
+  const q = req.query;
+  //convert string values to int;
+  if (q.minSalary !== undefined) q.minSalary = +q.minSalary;
+  if (q.hasEquity === "true") q.hasEquity = true;
   try {
-    const jobs = await Job.findAll();
+    const validator = jsonschema.validate(q, jobSearchSchema);
+    if (!validator.valid) {
+      const errs = validator.errors.map((e) => e.stack);
+      throw new BadRequestError(errs);
+    }
 
+    const jobs = await Job.findAll(q);
     return res.json({ jobs });
   } catch (err) {
     return next(err);

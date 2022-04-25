@@ -107,6 +107,55 @@ describe("GET /jobs", function () {
     });
   });
 
+  test("works: filtering", async function () {
+    const resp = await request(app).get("/jobs").query({ minSalary: 2 });
+    expect(resp.body).toEqual({
+      jobs: [
+        {
+          id: testJobIds[1],
+          title: "J2",
+          salary: 2,
+          equity: "0.2",
+          companyHandle: "c1",
+          companyName: "C1",
+        },
+        {
+          id: testJobIds[2],
+          title: "J3",
+          salary: 3,
+          equity: null,
+          companyHandle: "c1",
+          companyName: "C1",
+        },
+      ],
+    });
+  });
+
+  test("works: multiple filters", async function () {
+    const resp = await request(app)
+      .get("/jobs")
+      .query({ hasEquity: true, minSalary: 2, title: "2" });
+    expect(resp.body).toEqual({
+      jobs: [
+        {
+          id: testJobIds[1],
+          title: "J2",
+          salary: 2,
+          equity: "0.2",
+          companyHandle: "c1",
+          companyName: "C1",
+        },
+      ],
+    });
+  });
+
+  test("bad request if invalid filter key", async function () {
+    const resp = await request(app)
+      .get("/jobs")
+      .query({ minSalary: 2, invalid: "invalid" });
+    expect(resp.status).toEqual(400);
+  });
+
   test("fails: test next() handler", async function () {
     // there's no normal failure event which will cause this route to fail ---
     // thus making it hard to test that the error-handler works with it. This
