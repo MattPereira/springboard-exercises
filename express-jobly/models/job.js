@@ -57,14 +57,16 @@ class Job {
 
     const { title, minSalary, hasEquity } = searchFilters;
 
-    // Add each possible search term to queryValues and whereExpressions
-    // to generate proper SQL WHERE clause and parameter values for parameterized query
+    // Add each possible searchFilter key to whereExpressions to generate proper SQL WHERE clause
+    // Add each possible searchFilter value to queryValues to generate queryValues array
+    // Dynamically set the $1, $2 variables using queryValues.length
 
     if (minSalary !== undefined) {
       queryValues.push(minSalary);
       whereExpressions.push(`j.salary >= $${queryValues.length}`);
     }
 
+    //hasEquity requires no queryValue, it is only a WHERE expression
     if (hasEquity === true) {
       whereExpressions.push(`j.equity > 0`);
     }
@@ -74,6 +76,7 @@ class Job {
       whereExpressions.push(`j.title ILIKE $${queryValues.length}`);
     }
 
+    // generate SQL syntax for WHERE clause only if searchFilters are present
     if (whereExpressions.length > 0) {
       query = query + " WHERE " + whereExpressions.join(" AND ");
     }

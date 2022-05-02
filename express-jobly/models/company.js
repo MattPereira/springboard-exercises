@@ -57,7 +57,9 @@ class Company {
                   logo_url AS "logoUrl"
            FROM companies`;
 
+    // whereExpressions looks like ['num_employees >= $1', 'name ILIKE $2']
     let whereExpressions = [];
+    // queryValues looks like [100, '%webber%']
     let queryValues = [];
 
     const { minEmployees, maxEmployees, name } = searchFilters;
@@ -66,8 +68,9 @@ class Company {
       throw new BadRequestError("Min employees cannot be greater than max");
     }
 
-    // Add each possible search term to whereExpressions and queryValues
-    // to generate proper SQL WHERE clause
+    // Add each possible searchFilter key to whereExpressions to generate proper SQL WHERE clause
+    // Add each possible searchFilter value to queryValues to generate queryValues array
+    // Dynamically set the $1, $2, $3 variables using queryValues.length
 
     if (minEmployees !== undefined) {
       queryValues.push(minEmployees);
@@ -84,6 +87,7 @@ class Company {
       whereExpressions.push(`name ILIKE $${queryValues.length}`);
     }
 
+    // generate SQL syntax for WHERE clause only if searchFilters are present
     if (whereExpressions.length > 0) {
       query += " WHERE " + whereExpressions.join(" AND ");
     }
