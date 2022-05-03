@@ -34,12 +34,4 @@ describe("SQL for partial updates", function () {
       expect(e instanceof BadRequestError).toBeTruthy();
     }
   });
-
-  it("works with 1 item", function () {
-    const result = sqlForPartialUpdate({ age: 31 });
-    expect(result).toEqual({
-      setCols: '"first_name"=$1',
-      values: ["Matt"],
-    });
-  });
 });
