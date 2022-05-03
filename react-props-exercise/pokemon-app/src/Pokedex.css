@@ -1,0 +1,32 @@
+.Pokedex {
+    text-align: center;
+    margin: 20px;
+    padding: 50px;
+    border-radius: 20px;
+}
+
+.Pokedex-title {
+    text-align: center;
+    color: blue;
+    font-size: 3rem;
+}
+
+.Pokedex-cards {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.Pokedex-handExp {
+    font-size: 2rem;
+    font-family: monospace;
+}
+
+.Pokedex-winMessage {
+    font-size: 1rem;
+    position: relative;
+    bottom: 10px;
+    margin: 0;
+    padding: 0;
+
+}
