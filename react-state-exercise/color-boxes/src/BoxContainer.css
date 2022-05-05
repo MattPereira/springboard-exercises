@@ -1,0 +1,16 @@
+.BoxContainer {
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.BoxContainer-btn {
+    color: white;
+    background-color: black;
+    padding: 1rem;
+    border: none;
+    border-radius: 10px;
+    font-family: monospace;
+    font-size: 2rem;
+    font-weight: 600;
+}

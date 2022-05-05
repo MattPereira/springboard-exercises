@@ -1,0 +1,17 @@
+.EightBall {
+    -webkit-box-shadow: 0 0 50px #fff;
+    box-shadow: 0 0 50px #fff;
+    color: white;
+    height: 420px;
+    width: 420px;
+    border-radius: 50%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    margin: 50px;
+    cursor: pointer;
+}
+
+.EightBall-msg {
+    font-size:2.5rem;
+}
