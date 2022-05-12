@@ -1,0 +1,8 @@
+.TodoList {
+    display: flex;
+    flex-direction: column;
+}
+
+.TodoList-form {
+    margin: 2rem;
+}

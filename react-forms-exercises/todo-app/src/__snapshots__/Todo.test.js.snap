@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <li>
+      <button>
+        Edit
+      </button>
+      <button>
+        ✓
+      </button>
+      <button>
+        X
+      </button>
+    </li>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`matches snapshot when editing 1`] = `
+<DocumentFragment>
+  <div>
+    <li
+      style="text-decoration: line-through;"
+    >
+      <button>
+        Edit
+      </button>
+      <button>
+        ✓
+      </button>
+      <button>
+        X
+      </button>
+    </li>
+  </div>
+</DocumentFragment>
+`;

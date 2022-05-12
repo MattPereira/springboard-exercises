@@ -1,0 +1,9 @@
+.BoxList-container {
+    display: flex;
+    margin-top: 3rem;
+}
+
+.BoxList-form {
+    display: flex;
+    justify-content: center;
+}

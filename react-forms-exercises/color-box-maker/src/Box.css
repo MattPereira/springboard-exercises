@@ -1,0 +1,14 @@
+.Box-btn {
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 2px;
+    font-size: 1.25rem;
+    cursor: pointer;
+}
+
+.Box {
+    text-align: end;
+    
+}
