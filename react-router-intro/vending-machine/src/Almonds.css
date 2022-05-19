@@ -1,0 +1,20 @@
+.Almonds {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 80vh;
+}
+
+.Almonds > img {
+    animation: spin 5s linear infinite;
+    max-width: 40%;
+}
+
+@keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }

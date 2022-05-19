@@ -1,0 +1,13 @@
+.blueberries {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.blueberry {
+    position: absolute;
+    z-index: -1;
+    max-width: 15%;
+}

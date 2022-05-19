@@ -1,0 +1,23 @@
+.Navbar {
+    background-color: tomato;
+    text-align: center;
+    font-weight: 400;
+    padding: 1rem;
+  }
+  
+  .Navbar a {
+    padding: 1rem; 
+    font-size: 1.5rem;
+    color: white;
+    text-decoration: none;
+    margin: 3rem;
+  }
+  
+  .Navbar a:hover {
+    cursor: pointer;
+  }
+  
+  .Navbar a.active {
+    text-decoration: underline;
+    font-weight: 800;
+  }
