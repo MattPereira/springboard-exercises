@@ -1,0 +1,28 @@
+.NewColor{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  background: linear-gradient(to right, red, orange, yellow, green, cyan, blue, violet);
+    align-items: center;
+    justify-content: center;
+}
+
+.NewColor form {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: 40%;
+    background-color: white;
+    padding: 50px;
+    border-radius: 10px;
+}
+
+label {
+    margin: 0rem 1rem;
+}
+
+.NewColorForm-error {
+    color: red;
+}

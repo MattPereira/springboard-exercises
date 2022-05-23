@@ -1,0 +1,21 @@
+.ColorList-header {
+    background-color: black;
+    padding: 3rem 0rem;
+    font-family: monospace;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.ColorList-header > a {
+    color: white;
+    font-size: 1.5rem;
+}
+
+.ColorList > p {
+    font-size: 2rem;
+    margin: 2rem
+}
+
+.ColorList-links {
+    font-size: 2rem;
+}
