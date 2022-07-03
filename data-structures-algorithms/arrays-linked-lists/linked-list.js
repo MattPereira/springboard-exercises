@@ -70,24 +70,53 @@ class LinkedList {
   /** pop(): return & remove last item. */
 
   pop() {
-    return this.removeAt(this.length - 1);
+    //edge case : length === 1
+    if (this.length === 1) {
+      let removedVal = this.head.val;
+      this.head = null;
+      this.tail = null;
+      this.length -= 1;
+      return removedVal;
+    }
+
+    // normal case: length > 1
+    //pointer to the item before the last node in the llist
+    let prev = this._get(this.length - 2);
+    let removedVal = prev.next.val;
+    prev.next = null;
+    this.tail = prev;
+    this.length -= 1;
+    return removedVal;
   }
 
   /** shift(): return & remove first item. */
 
   shift() {
-    return this.removeAt(0);
+    //edge case: length === 1
+    if (this.length === 1) {
+      let removedVal = this.head.val;
+      this.head = null;
+      this.tail = null;
+      this.length -= 1;
+      return removedVal;
+    }
+
+    //normal case: length > 1
+    let removedVal = this.head.val;
+    this.head = this.head.next;
+    this.length -= 1;
+    return removedVal;
   }
 
   /** getAt(idx): get val at idx. */
 
   getAt(idx) {
-    let cur = this.head;
     let count = 0;
+    let cur = this.head;
 
-    while (cur !== null && count != idx) {
-      count += 1;
+    while (cur && count < idx) {
       cur = cur.next;
+      count++;
     }
 
     return cur.val;
