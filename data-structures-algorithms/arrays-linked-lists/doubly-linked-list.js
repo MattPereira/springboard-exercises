@@ -3,13 +3,14 @@
 class Node {
   constructor(val) {
     this.val = val;
+    this.prev = null;
     this.next = null;
   }
 }
 
 /** LinkedList: chained together nodes. */
 
-class LinkedList {
+class DoublyLinkedList {
   constructor(vals = []) {
     this.head = null;
     this.tail = null;
@@ -24,7 +25,6 @@ class LinkedList {
     let cur = this.head;
     let count = 0;
 
-    //keep moving cur to cur.next until cur === null OR count === idx
     while (cur !== null && count != idx) {
       count += 1;
       cur = cur.next;
@@ -43,6 +43,7 @@ class LinkedList {
       this.tail = this.head;
     } else {
       //handles not empty llist
+      newNode.prev = this.tail;
       this.tail.next = newNode;
       this.tail = newNode;
     }
@@ -62,16 +63,17 @@ class LinkedList {
     } else {
       //handle not empty llist
       newNode.next = this.head;
+      this.head.prev = newNode;
       this.head = newNode;
     }
 
     this.length += 1;
   }
 
-  /****** pop(): return & remove last item. *****/
+  /** pop(): return & remove last item. */
 
   pop() {
-    /////edge case : length === 1 //////
+    //edge case : length === 1
     if (this.length === 1) {
       let removedVal = this.head.val;
       this.head = null;
@@ -81,12 +83,9 @@ class LinkedList {
     }
 
     ////// normal case: length > 1 //////
-    //pointer to the item before the last node in the llist
-    let prev = this._get(this.length - 2);
+    let prev = this.tail.prev;
     let removedVal = this.tail.val;
-    //deleting the tail node
     prev.next = null;
-    //updating the tail
     this.tail = prev;
     this.length -= 1;
     return removedVal;
@@ -132,13 +131,7 @@ class LinkedList {
       throw new Error("Invalid index!");
     }
 
-    let cur = this.head;
-    let count = 0;
-
-    while (cur !== null && count != idx) {
-      count += 1;
-      cur = cur.next;
-    }
+    let cur = this._get(idx);
 
     cur.val = val;
   }
@@ -154,11 +147,13 @@ class LinkedList {
     if (idx === 0) return this.unshift(val);
     if (idx === this.length) return this.push(val);
 
-    // grab the node before idx
-    let prev = this._get(idx - 1);
+    // target the node before idx
+    let target = this._get(idx - 1);
     let newNode = new Node(val);
-    newNode.next = prev.next;
-    prev.next = newNode;
+    newNode.next = target.next;
+    target.next.prev = newNode;
+    newNode.prev = target;
+    target.next = newNode;
 
     this.length += 1;
   }
@@ -170,30 +165,36 @@ class LinkedList {
       throw new Error("Invalid index!");
     }
 
-    // find the prev node from idx
-    let prev = this._get(idx - 1);
+    // find the target node to remove from idx
+    let target = this._get(idx);
 
-    // edge case: remove first item (head)
+    ///// edge case: remove first item (head) /////
     if (idx === 0) {
       let val = this.head.val;
       this.head = this.head.next;
       this.length -= 1;
       if (this.length < 2) this.tail = this.head;
+      if (this.length >= 2) this.head.prev = null;
       return val;
     }
 
-    // edge case: removing tail
+    ///// edge case: removing tail /////
     if (idx === this.length - 1) {
-      let val = prev.next.val;
-      prev.next = null;
-      this.tail = prev;
+      let val = target.val;
+      //disconnect link between previous node and tail
+      target.prev.next = null;
+      //update tail to be the previous node
+      this.tail = target.prev;
       this.length -= 1;
       return val;
     }
 
-    // normal case: remove somewhere in middle of llist
-    let val = prev.next.val;
-    prev.next = prev.next.next;
+    ///// normal case: remove somewhere in middle of llist /////
+    let val = target.val;
+    let prev = target.prev;
+    //handle removal of target and reconnection of doubly linked list
+    prev.next = target.next;
+    target.next.prev = prev;
     this.length -= 1;
     return val;
   }
@@ -216,4 +217,4 @@ class LinkedList {
   }
 }
 
-module.exports = LinkedList;
+module.exports = DoublyLinkedList;
