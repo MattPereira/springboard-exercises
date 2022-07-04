@@ -33,7 +33,7 @@ function findPivot(arr) {
   }
 }
 
-//Second step is to declare binarySearch function with start and end parameters
+//Second step is to declare binarySearch function with start and end arguments
 function binarySearch(array, num, start, end) {
   if (array.length === 0) return -1;
   if (num < array[start] || num > array[end]) return -1;
@@ -55,11 +55,11 @@ function binarySearch(array, num, start, end) {
 function findRotatedIndex(array, num) {
   let pivotIdx = findPivot(array);
 
-  if (pivotIdx > 0 && num >= array[0] && num <= array[pivotIdx - 1]) {
-    //binary search from start of array to pivotIdx - 1
+  //looking at the first portion of array before the pivot
+  if (num >= array[0] && num <= array[pivotIdx - 1]) {
     return binarySearch(array, num, 0, pivotIdx - 1);
+    //looking at second portin of array from pivotIdx to end of array
   } else {
-    //binary search from pivotIdx to the end of array
     return binarySearch(array, num, pivotIdx, array.length - 1);
   }
 }

@@ -19,22 +19,23 @@ function countZeroes(arr) {
 }
 
 function findFirstZeroIdx(arr) {
-  let leftIdx = 0;
-  let rightIdx = arr.length - 1;
+  //low and high are idxs of the array
+  let low = 0;
+  let high = arr.length - 1;
 
   //loop will move left and right Idx towards eachother until leftIdx > rightIdx
-  while (leftIdx <= rightIdx) {
+  while (low <= high) {
     //divide
-    let midIdx = Math.floor((leftIdx + rightIdx) / 2);
-    //if theres a zero at index 0 of array or if the arr[midIdx -1] === 1
+    let midIdx = Math.floor((low + high) / 2);
+    //if array starts with a zero or the number before the zero is a 1
     if (arr[midIdx] === 0 && (midIdx === 0 || arr[midIdx - 1] === 1)) {
       return midIdx;
       // if arr[midIdx] is pointing at a 1, move leftIdx to the right
     } else if (arr[midIdx] === 1) {
-      leftIdx = midIdx + 1;
+      low = midIdx + 1;
       // else arr[midIdx] === 0, so move rightIdx to the left
     } else {
-      rightIdx = midIdx - 1;
+      high = midIdx - 1;
     }
   }
 

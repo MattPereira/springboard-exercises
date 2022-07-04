@@ -15,23 +15,26 @@
 //the value of n is just the pivotIdx?
 
 function findRotationCount(arr) {
-  //handle edge cases of 1 item array and array with only ascending values
-  if (arr.length === 1 || arr[0] < arr[arr.length - 1]) return 0;
+  //handle edge cases of 1 item array
+  if (arr.length === 1) return 0;
 
   let start = 0;
   let end = arr.length - 1;
 
   while (start <= end) {
-    let mid = Math.floor((start + end) / 2);
+    let midIdx = Math.floor((start + end) / 2);
 
     //move midIdx until the value before midIdx is greater than arr[midIdx]
-    if (arr[mid - 1] > arr[mid]) return mid;
-    else if (arr[start] <= arr[mid]) {
-      start = mid + 1;
-    } else if (arr[start] > arr[mid]) {
-      end = mid - 1;
+    if (arr[midIdx - 1] > arr[midIdx]) return midIdx;
+    else if (arr[start] <= arr[midIdx]) {
+      start = midIdx + 1;
+    } else if (arr[start] > arr[midIdx]) {
+      end = midIdx - 1;
     }
   }
+
+  //edge case of array with only ascending values
+  return 0;
 }
 
 // [4, 10]

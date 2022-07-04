@@ -25,16 +25,16 @@ function findFirstIdx(arr, num) {
   let high = arr.length - 1;
 
   while (low <= high) {
-    let mid = (low + high) / 2;
+    let midIdx = (low + high) / 2;
 
-    //"num > arr[mid-1]" determines if mid is pointing at firstIdx of num
-    if (arr[mid] === num && (mid === 0 || num > arr[mid - 1])) {
-      return mid;
-      // if num greater than pointer value, move low up to one spot above current mid
-    } else if (num > arr[mid]) {
-      low = mid + 1;
-    } else if (num < arr[mid] || num === arr[mid]) {
-      high = mid - 1;
+    //if arr[midIdx] is num and its at index 0 or the number before it is a 1
+    if (arr[midIdx] === num && (midIdx === 0 || num > arr[midIdx - 1])) {
+      return midIdx;
+    } else if (num > arr[midIdx]) {
+      low = midIdx + 1;
+      //if arr[midIdx] is num but the num before it is not less than arr[midIdx]
+    } else if (num < arr[midIdx] || num === arr[midIdx]) {
+      high = midIdx - 1;
     }
   }
 
@@ -46,16 +46,18 @@ function findLastIdx(arr, num) {
   let high = arr.length - 1;
 
   while (low <= high) {
-    let mid = (low + high) / 2;
+    let midIdx = (low + high) / 2;
 
-    //determines if mid is pointing at lastIdx of num by looking at the number after and the last number in the array
-    if (arr[mid] === num && (mid === arr.length - 1 || num < arr[mid + 1])) {
-      return mid;
-      // if num less than pointer value
-    } else if (num < arr[mid]) {
-      high = mid - 1;
-    } else if (num === arr[mid] || num > arr[mid]) {
-      low = mid + 1;
+    //looking at the number after and the last number in the array
+    if (
+      arr[midIdx] === num &&
+      (midIdx === arr.length - 1 || num < arr[midIdx + 1])
+    ) {
+      return midIdx;
+    } else if (num < arr[midIdx]) {
+      high = midIdx - 1;
+    } else if (num === arr[midIdx] || num > arr[midIdx]) {
+      low = midIdx + 1;
     }
   }
 }
