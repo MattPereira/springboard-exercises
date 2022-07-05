@@ -1,7 +1,7 @@
 // const Stack = require("./stack");
 
-//FURTHER STUDY WITH this._list = new LinkedList();
-const Stack = require("./further_study/stack");
+//FURTHER STUDY using array for a stack
+const Stack = require("./array-stack");
 
 let stack;
 
@@ -12,15 +12,11 @@ beforeEach(function () {
 describe("push", function () {
   it("places the value at the top of the stack and returns undefined", function () {
     expect(stack.push(10)).toBe(undefined);
-    expect(stack.first.val).toBe(10);
-    expect(stack.last.val).toBe(10);
+    expect(stack.arr[0]).toBe(10);
     stack.push(100);
-    expect(stack.first.val).toBe(100);
-    expect(stack.last.val).toBe(10);
+    expect(stack.arr[1]).toBe(100);
     stack.push(1000);
-
-    expect(stack.first.val).toBe(1000);
-    expect(stack.last.val).toBe(10);
+    expect(stack.arr[2]).toBe(1000);
   });
 });
 
@@ -33,11 +29,10 @@ describe("pop", function () {
     var removed = stack.pop();
     expect(removed).toBe(1000);
     expect(stack.size).toBe(2);
-    expect(stack.first.val).toBe(100);
-    expect(stack.last.val).toBe(10);
+    expect(stack.arr[1]).toBe(100);
+    expect(stack.arr[0]).toBe(10);
     stack.pop();
-    expect(stack.first.val).toBe(10);
-    expect(stack.last.val).toBe(10);
+    expect(stack.arr[0]).toBe(10);
     stack.pop();
 
     expect(stack.size).toBe(0);

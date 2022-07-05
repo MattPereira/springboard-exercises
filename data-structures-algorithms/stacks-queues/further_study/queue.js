@@ -1,32 +1,29 @@
-/** Node: node for a queue. */
-
-class Node {
-  constructor(val) {
-    this.val = val;
-    this.next = null;
-  }
-}
+const LinkedList = require("./linked-list");
 
 /** Queue: chained-together nodes where you can
  *  remove from the front or add to the back. */
+
 class Queue {
   constructor() {
     this.first = null;
     this.last = null;
     this.size = 0;
+    this._list = new LinkedList();
   }
 
   /** enqueue(val): add new value to end of the queue. Returns undefined. */
 
   enqueue(val) {
-    const newNode = new Node(val);
+    // const newNode = new Node(val);
 
-    if (!this.first) {
-      this.first = newNode;
-      this.last = newNode;
+    this._list.push(val);
+    console.log(this._list);
+
+    if (!this.size) {
+      this.first = this._list.head;
+      this.last = this._list.tail;
     } else {
-      this.last.next = newNode;
-      this.last = newNode;
+      this.last = this._list.tail;
     }
 
     this.size++;
@@ -40,7 +37,7 @@ class Queue {
       throw new Error("Queue is empty!");
     }
 
-    let temp = this.first;
+    let temp = this._list.head;
 
     // edge case: dequeue with only one node left in Queue
     // must also handle deletion of this.last

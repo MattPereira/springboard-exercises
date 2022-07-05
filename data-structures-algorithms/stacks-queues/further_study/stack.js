@@ -1,34 +1,28 @@
-/** Node: node for a stack. */
-
-class Node {
-  constructor(val) {
-    this.val = val;
-    this.next = null;
-  }
-}
+const LinkedList = require("./linked-list");
 
 /** Stack: chained-together nodes where you can
  *  remove from the top or add to the top. */
+
 class Stack {
   constructor() {
     this.first = null;
     this.last = null;
     this.size = 0;
+    this._list = new LinkedList();
   }
 
   /** push(val): add new value to end of the stack. Returns undefined. */
 
   push(val) {
     //unshift a new Node(val) to start of this._list
-    let newNode = new Node(val);
-
-    if (!this.first) {
-      this.first = newNode;
-      this.last = newNode;
+    this._list.unshift(val);
+    if (!this.size) {
+      this.first = this._list.head;
+      this.last = this._list.tail;
     } else {
-      let tmp = this.first;
-      this.first = newNode;
-      this.first.next = tmp;
+      let temp = this.first;
+      this.first = this._list.head;
+      this.first.next = temp;
     }
 
     this.size++;
@@ -46,9 +40,11 @@ class Stack {
       this.last = null;
     }
 
-    this.first = this.first.next;
+    this.first = this._list.head.next;
     this.size--;
-    return temp.val;
+
+    //_list.shift() will return and remove what was the head node
+    return this._list.shift();
   }
 
   /** peek(): return the value of the first node in the stack. */

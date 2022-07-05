@@ -1,4 +1,8 @@
-const Queue = require("./queue");
+// BASIC VERSION
+// const Queue = require("./queue");
+
+//FURTHER STUDY WITH this._list = new LinkedList();
+const Queue = require("./further_study/queue");
 
 let queue;
 
