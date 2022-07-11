@@ -1,19 +1,15 @@
 const BinarySearchTree = require("./binary-search-tree");
 
-describe("insert", function() {
-  it("inserts a node at the correct position", function() {
+describe("insert", function () {
+  it("inserts a node at the correct position", function () {
     var binarySearchTree = new BinarySearchTree();
-    binarySearchTree
-      .insert(15)
-      .insert(20)
-      .insert(10)
-      .insert(12);
+    binarySearchTree.insert(15).insert(20).insert(10).insert(12);
     expect(binarySearchTree.root.val).toEqual(15);
     expect(binarySearchTree.root.right.val).toEqual(20);
     expect(binarySearchTree.root.left.right.val).toEqual(12);
   });
 
-  it("inserts a node at the root if there is nothing there", function() {
+  it("inserts a node at the root if there is nothing there", function () {
     var binarySearchTree = new BinarySearchTree();
     binarySearchTree.insert(15);
     expect(binarySearchTree.root.val).toEqual(15);
@@ -22,8 +18,8 @@ describe("insert", function() {
   });
 });
 
-describe("insertRecursively", function() {
-  it("inserts a node at the correct position", function() {
+describe("insertRecursively", function () {
+  it("inserts a node at the correct position", function () {
     var binarySearchTree = new BinarySearchTree();
     binarySearchTree
       .insertRecursively(15)
@@ -35,7 +31,7 @@ describe("insertRecursively", function() {
     expect(binarySearchTree.root.left.right.val).toEqual(12);
   });
 
-  it("inserts a node at the root if there is nothing there", function() {
+  it("inserts a node at the root if there is nothing there", function () {
     var binarySearchTree = new BinarySearchTree();
     binarySearchTree.insertRecursively(15);
     expect(binarySearchTree.root.val).toEqual(15);
@@ -44,60 +40,44 @@ describe("insertRecursively", function() {
   });
 });
 
-describe("find", function() {
-  it("finds a node correctly", function() {
+describe("find", function () {
+  it("finds a node correctly", function () {
     let binarySearchTree = new BinarySearchTree();
-    binarySearchTree
-      .insert(15)
-      .insert(20)
-      .insert(10)
-      .insert(12);
+    binarySearchTree.insert(15).insert(20).insert(10).insert(12);
     var foundNode = binarySearchTree.find(20);
     expect(foundNode.val).toBe(20);
     expect(foundNode.left).toBe(null);
     expect(foundNode.right).toBe(null);
   });
 
-  it("returns undefined if a node is not found", function() {
+  it("returns undefined if a node is not found", function () {
     let binarySearchTree = new BinarySearchTree();
-    binarySearchTree
-      .insert(15)
-      .insert(20)
-      .insert(10)
-      .insert(12);
+    binarySearchTree.insert(15).insert(20).insert(10).insert(12);
     var foundNode = binarySearchTree.find(120);
     expect(foundNode).toBe(undefined);
   });
 });
 
-describe("findRecursively", function() {
-  it("finds a node correctly", function() {
+describe("findRecursively", function () {
+  it("finds a node correctly", function () {
     let binarySearchTree = new BinarySearchTree();
-    binarySearchTree
-      .insert(15)
-      .insert(20)
-      .insert(10)
-      .insert(12);
+    binarySearchTree.insert(15).insert(20).insert(10).insert(12);
     var foundNode = binarySearchTree.findRecursively(20);
     expect(foundNode.val).toBe(20);
     expect(foundNode.left).toBe(null);
     expect(foundNode.right).toBe(null);
   });
 
-  it("returns undefined if a node is not found", function() {
+  it("returns undefined if a node is not found", function () {
     let binarySearchTree = new BinarySearchTree();
-    binarySearchTree
-      .insert(15)
-      .insert(20)
-      .insert(10)
-      .insert(12);
+    binarySearchTree.insert(15).insert(20).insert(10).insert(12);
     var foundNode = binarySearchTree.findRecursively(120);
     expect(foundNode).toBe(undefined);
   });
 });
 
-describe("dfsPreOrder", function() {
-  it("returns an array of values found with DFS Pre Order", function() {
+describe("dfsPreOrder", function () {
+  it("returns an array of values found with DFS Pre Order", function () {
     let binarySearchTree = new BinarySearchTree();
     binarySearchTree
       .insert(15)
@@ -111,8 +91,8 @@ describe("dfsPreOrder", function() {
   });
 });
 
-describe("dfsInOrder", function() {
-  it("returns an array of values found with DFS In Order", function() {
+describe("dfsInOrder", function () {
+  it("returns an array of values found with DFS In Order", function () {
     let binarySearchTree = new BinarySearchTree();
     binarySearchTree
       .insert(15)
@@ -126,8 +106,8 @@ describe("dfsInOrder", function() {
   });
 });
 
-describe("dfsPostOrder", function() {
-  it("returns an array of values found with DFS Post Order", function() {
+describe("dfsPostOrder", function () {
+  it("returns an array of values found with DFS Post Order", function () {
     let binarySearchTree = new BinarySearchTree();
     binarySearchTree
       .insert(15)
@@ -141,8 +121,8 @@ describe("dfsPostOrder", function() {
   });
 });
 
-describe("BFS", function() {
-  it("should return the correct output", function() {
+describe("BFS", function () {
+  it("should return the correct output", function () {
     let binarySearchTree = new BinarySearchTree();
     binarySearchTree
       .insert(15)
@@ -156,8 +136,8 @@ describe("BFS", function() {
   });
 });
 
-describe("remove", function() {
-  it("remove should correctly remove a node with no children", function() {
+describe("remove", function () {
+  it("remove should correctly remove a node with no children", function () {
     let binarySearchTree = new BinarySearchTree();
     binarySearchTree
       .insert(15)
@@ -176,7 +156,7 @@ describe("remove", function() {
     expect(binarySearchTree.root.left.left.right).toBe(null);
   });
 
-  it("remove should correctly remove a node with one child", function() {
+  it("remove should correctly remove a node with one child", function () {
     let binarySearchTree = new BinarySearchTree();
     binarySearchTree
       .insert(15)
@@ -198,7 +178,7 @@ describe("remove", function() {
     expect(binarySearchTree.root.right.left).toBe(null);
   });
 
-  it("remove should correctly remove a node with two children", function() {
+  it("remove should correctly remove a node with two children", function () {
     let binarySearchTree = new BinarySearchTree();
     binarySearchTree
       .insert(15)
@@ -226,7 +206,7 @@ describe("remove", function() {
     expect(binarySearchTree.root.right.right.left.val).toBe(30);
   });
 
-  it("should remove a node with two children and handle the children of the removed node", function() {
+  it("should remove a node with two children and handle the children of the removed node", function () {
     var binarySearchTree = new BinarySearchTree();
     binarySearchTree
       .insert(22)
@@ -246,8 +226,8 @@ describe("remove", function() {
   });
 });
 
-describe("isBalanced", function() {
-  it("checks if it is balanced", function() {
+describe("isBalanced", function () {
+  it("checks if it is balanced", function () {
     var binarySearchTree = new BinarySearchTree();
     binarySearchTree.insert(15);
     binarySearchTree.insert(20);
@@ -265,8 +245,8 @@ describe("isBalanced", function() {
   });
 });
 
-describe("findSecondHighest", function() {
-  it("finds the 2nd largest", function() {
+describe("findSecondHighest", function () {
+  it("finds the 2nd largest", function () {
     var binarySearchTree = new BinarySearchTree();
     binarySearchTree.insert(15);
     binarySearchTree.insert(20);
