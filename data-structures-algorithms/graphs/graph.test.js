@@ -1,7 +1,7 @@
 const { Graph, Node } = require("./graph");
 
-describe("addVertex", function() {
-  it("should add a key in the adjacency", function() {
+describe("addVertex", function () {
+  it("should add a key in the adjacency", function () {
     let graph = new Graph();
     let a = new Node("A");
     let b = new Node("B");
@@ -18,8 +18,8 @@ describe("addVertex", function() {
   });
 });
 
-describe("addVertices", function() {
-  it("should add multiple keys in the adjacency", function() {
+describe("addVertices", function () {
+  it("should add multiple keys in the adjacency", function () {
     let graph = new Graph();
     let a = new Node("A");
     let b = new Node("B");
@@ -34,8 +34,8 @@ describe("addVertices", function() {
   });
 });
 
-describe("addEdge", function() {
-  it("should add the appropriate edges to the adjacency list", function() {
+describe("addEdge", function () {
+  it("should add the appropriate edges to the adjacency list", function () {
     let graph = new Graph();
     let a = new Node("A");
     let b = new Node("B");
@@ -53,8 +53,8 @@ describe("addEdge", function() {
   });
 });
 
-describe("removeEdge", function() {
-  it("should remove the vertices from the adjacency list", function() {
+describe("removeEdge", function () {
+  it("should remove the vertices from the adjacency list", function () {
     let graph = new Graph();
     let a = new Node("A");
     let b = new Node("B");
@@ -74,8 +74,8 @@ describe("removeEdge", function() {
   });
 });
 
-describe("removeVertex", function() {
-  it("should remove the vertex as well as any edges", function() {
+describe("removeVertex", function () {
+  it("should remove the vertex as well as any edges", function () {
     let graph = new Graph();
     let a = new Node("A");
     let b = new Node("B");
@@ -94,11 +94,16 @@ describe("removeVertex", function() {
     expect(graph.nodes.has(b)).toBeTruthy();
     expect(graph.nodes.has(c)).toBeFalsy();
     expect(graph.nodes.has(d)).toBeFalsy();
+
+    //tests to make sure adjacency lists are updated
+    //not included by springboard
+    expect(a.adjacent).not.toContain(c);
+    expect(b.adjacent).not.toContain(d);
   });
 });
 
-describe("DFS", function() {
-  it("return an array of the nodes searched using DFS", function() {
+describe("DFS", function () {
+  it("return an array of the nodes searched using DFS", function () {
     let graph = new Graph();
     let S = new Node("S");
     let P = new Node("P");
@@ -135,7 +140,7 @@ describe("DFS", function() {
     graph.addEdge(R, T);
     graph.addEdge(W, T);
 
-    var result = JSON.stringify(graph.depthFirstSearch(S));
+    var result = JSON.stringify(graph.depthFirstSearchRecursive(S));
     var validResult =
       result ===
         JSON.stringify(["S", "U", "V", "W", "T", "R", "Q", "Y", "X", "P"]) ||
@@ -146,8 +151,8 @@ describe("DFS", function() {
   });
 });
 
-describe("BFS", function() {
-  it("should return an array of the nodes searched using BFS", function() {
+describe("BFS", function () {
+  it("should return an array of the nodes searched using BFS", function () {
     let graph = new Graph();
     let S = new Node("S");
     let P = new Node("P");
@@ -194,7 +199,7 @@ describe("BFS", function() {
       "Y",
       "R",
       "W",
-      "T"
+      "T",
     ]);
   });
 });
