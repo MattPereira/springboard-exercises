@@ -1,4 +1,4 @@
-const selectionSort = require('./selection')
+const selectionSort = require("./selection");
 
 describe("selectionSort", function () {
   it("should exist", function () {
@@ -23,53 +23,16 @@ describe("selectionSort", function () {
     );
     expect(selectionSort([])).toEqual([], "selectionSort([]) should be []");
     var nums = [
-      4,
-      3,
-      5,
-      3,
-      43,
-      232,
-      4,
-      34,
-      232,
-      32,
-      4,
-      35,
-      34,
-      23,
-      2,
-      453,
-      546,
-      75,
-      67,
-      4342,
-      32
+      4, 3, 5, 3, 43, 232, 4, 34, 232, 32, 4, 35, 34, 23, 2, 453, 546, 75, 67,
+      4342, 32,
     ];
     expect(selectionSort(nums)).toEqual(
       [
-        2,
-        3,
-        3,
-        4,
-        4,
-        4,
-        5,
-        23,
-        32,
-        32,
-        34,
-        34,
-        35,
-        43,
-        67,
-        75,
-        232,
-        232,
-        453,
-        546,
-        4342
+        2, 3, 3, 4, 4, 4, 5, 23, 32, 32, 34, 34, 35, 43, 67, 75, 232, 232, 453,
+        546, 4342,
       ],
       "selectionSort([4, 3, 5, 3, 43, 232, 4, 34, 232, 32, 4, 35, 34, 23, 2, 453, 546, 75, 67, 4342, 32]) should equal [2, 3, 3, 4, 4, 4, 5, 23, 32, 32, 34, 34, 35, 43, 67, 75, 232, 232, 453, 546, 4342]"
     );
+    expect(selectionSort([3, 2, 1])).toEqual([1, 2, 3]);
   });
 });
